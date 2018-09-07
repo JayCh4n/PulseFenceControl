@@ -115,13 +115,14 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-	HAL_Delay(50);
+	HAL_Delay(1000);
 	
 	__HAL_UART_ENABLE_IT(&huart1, UART_IT_TC);
 	__HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
 	
 	HAL_TIM_Base_Start_IT(&htim1);
 	
+	auto_dectect();
 //	set_primary_boost_mode(HIGH_VOLTAGE_MODE);
 //	start_primary_boost();
 //	while(!HAL_GPIO_ReadPin(DETECT_LEVEL_LOW_GPIO_Port, DETECT_LEVEL_LOW_Pin));
@@ -139,11 +140,11 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-	if(arming_sta)
-	{
-		boost_release();
-		alarm_inquire();
-	}
+		if(arming_sta)
+		{
+			boost_release();
+			alarm_inquire();
+		}
 	
 //		if(HAL_GPIO_ReadPin(DETECT_LEVEL_HIGH_GPIO_Port, DETECT_LEVEL_HIGH_Pin))
 //		{

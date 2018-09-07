@@ -54,6 +54,8 @@ extern uint16_t broken_short_b4_line_cnt;
 extern uint16_t zone1_alarm_delay_time;
 extern uint16_t zone2_alarm_delay_time;
 
+extern uint8_t auto_detect_sta;
+
 void start_primary_boost(void);
 void stop_primary_boost(void);
 void primary_boost(uint8_t level);
@@ -64,5 +66,6 @@ void set_sensitivity(uint8_t zone_num, uint8_t level);
 void broken_detect(uint8_t zone_num);
 void alarm_inquire(void);
 void touch_net_dectec(uint8_t zone_num);
+void auto_dectect(void);
 
 #endif /* __BOOST_H */
