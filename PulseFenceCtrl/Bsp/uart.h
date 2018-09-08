@@ -11,6 +11,7 @@
 #define ZONE1_SENSITIVITY		0x04			//防区1灵敏度命令			数据：0x01 - 0x03	对应1——3等级灵敏度
 #define ZONE2_SENSITIVITY		0x05			//防区2灵敏度命令			数据：0x01 - 0x03	对应1——3等级灵敏度
 #define TOUCH_NET						0x06			//触网功能开关				数据:	0x00 关闭   0x01开启
+#define AUTO_DETECT					0x07			//自动检测命令				数据: 0x01 ：开始自动检测（接收）	0x02:自动检测完成（发送）
 
 #define ZONE1_STA		0x11	//防区1状态返回命令	 	数据: 0x00 正常 0x01 断线 0x02短路 0x03触网
 #define ZONE2_STA 	0x12	//防区3状态返回命令		数据: 0x00 正常 0x01 断线 0x02短路 0x03触网

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [PulseFenceCtrl\PulseFenceCtrl.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image PulseFenceCtrl\PulseFenceCtrl.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Sep 07 18:46:02 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat Sep 08 14:53:39 2018
 <BR><P>
 <H3>Maximum Stack Usage =        948 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -866,10 +866,11 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart1_deal
 </UL>
 
-<P><STRONG><a name="[97]"></a>auto_dectect</STRONG> (Thumb, 342 bytes, Stack size 808 bytes, boost.o(i.auto_dectect))
+<P><STRONG><a name="[97]"></a>auto_dectect</STRONG> (Thumb, 344 bytes, Stack size 808 bytes, boost.o(i.auto_dectect))
 <BR><BR>[Stack]<UL><LI>Max Depth = 948<LI>Call Chain = auto_dectect &rArr; get_max_voltage &rArr; get_return_voltage &rArr; HAL_ADC_PollForConversion &rArr; HAL_RCCEx_GetPeriphCLKFreq &rArr; HAL_RCC_GetPCLK2Freq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;primary_boost
+<BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_sta_msg
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;primary_boost
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_max_voltage
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_extreme_value
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
@@ -925,7 +926,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_max_voltage
 </UL>
 
-<P><STRONG><a name="[35]"></a>main</STRONG> (Thumb, 100 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[35]"></a>main</STRONG> (Thumb, 106 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 948<LI>Call Chain = main &rArr; auto_dectect &rArr; get_max_voltage &rArr; get_return_voltage &rArr; HAL_ADC_PollForConversion &rArr; HAL_RCCEx_GetPeriphCLKFreq &rArr; HAL_RCC_GetPCLK2Freq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;boost_release
@@ -971,6 +972,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
 </UL>
 <BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart1_deal
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;auto_dectect
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alarm_inquire
 </UL>
 
@@ -1014,7 +1016,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ralease_pulse
 </UL>
 
-<P><STRONG><a name="[85]"></a>uart1_deal</STRONG> (Thumb, 128 bytes, Stack size 16 bytes, uart.o(i.uart1_deal))
+<P><STRONG><a name="[85]"></a>uart1_deal</STRONG> (Thumb, 144 bytes, Stack size 16 bytes, uart.o(i.uart1_deal))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = uart1_deal &rArr; send_sta_msg &rArr; HAL_UART_Transmit_IT
 </UL>
 <BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_sta_msg

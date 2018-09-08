@@ -122,7 +122,6 @@ int main(void)
 	
 	HAL_TIM_Base_Start_IT(&htim1);
 	
-	auto_dectect();
 //	set_primary_boost_mode(HIGH_VOLTAGE_MODE);
 //	start_primary_boost();
 //	while(!HAL_GPIO_ReadPin(DETECT_LEVEL_LOW_GPIO_Port, DETECT_LEVEL_LOW_Pin));
@@ -146,6 +145,10 @@ int main(void)
 			alarm_inquire();
 		}
 	
+		if(auto_detect_sta)
+		{
+			auto_dectect();
+		}
 //		if(HAL_GPIO_ReadPin(DETECT_LEVEL_HIGH_GPIO_Port, DETECT_LEVEL_HIGH_Pin))
 //		{
 //			stop_primary_boost();

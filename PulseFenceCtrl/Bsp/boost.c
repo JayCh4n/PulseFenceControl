@@ -560,7 +560,6 @@ void get_extreme_value(float *max_value, float *min_value, float *data, uint16_t
 
 void auto_dectect(void)
 {
-	auto_detect_sta = 1;
 	uint8_t i;
 	
 	float zone1_high_normal_voltage[50];
@@ -617,6 +616,7 @@ void auto_dectect(void)
 	get_extreme_value(&zone2_high_max_normal_voltage,&zone2_high_min_normal_voltage, zone2_high_normal_voltage, 50);
 	get_extreme_value(&zone2_low_max_normal_voltage,&zone2_low_min_normal_voltage, zone2_low_normal_voltage, 50);
 	auto_detect_sta = 0;
+	send_sta_msg(AUTO_DETECT, 0x02);
 }
 
 

@@ -14,7 +14,6 @@ void uart1_deal(uint8_t *data_package)
 //	package_lenth = data_package[2] + 5;
 	command = data_package[3];
 	
-//	HAL_UART_Transmit_IT(&huart1, data_package, package_lenth);
 	switch(command)
 	{
 		case AMING_DISARM: arming_disarm(data_package[4]); send_sta_msg(AMING_DISARM, data_package[4]); break;
@@ -23,6 +22,7 @@ void uart1_deal(uint8_t *data_package)
 		case ZONE1_SENSITIVITY: set_sensitivity(ZONE1, data_package[4]); send_sta_msg(ZONE1_SENSITIVITY, data_package[4]); break;
 		case ZONE2_SENSITIVITY: set_sensitivity(ZONE2, data_package[4]); send_sta_msg(ZONE2_SENSITIVITY, data_package[4]); break;
 		case TOUCH_NET:	touch_net_mode = data_package[4]; send_sta_msg(TOUCH_NET, data_package[4]); break;
+		case AUTO_DETECT: auto_detect_sta = 1; send_sta_msg(AUTO_DETECT, data_package[4]); break;
 		default: break;
 	}
 }

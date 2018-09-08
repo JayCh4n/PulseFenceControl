@@ -52,9 +52,9 @@ Section Cross References
     main.o(i.main) refers to main.o(i.MX_NVIC_Init) for MX_NVIC_Init
     main.o(i.main) refers to stm32f1xx_hal.o(i.HAL_Delay) for HAL_Delay
     main.o(i.main) refers to stm32f1xx_hal_tim.o(i.HAL_TIM_Base_Start_IT) for HAL_TIM_Base_Start_IT
-    main.o(i.main) refers to boost.o(i.auto_dectect) for auto_dectect
     main.o(i.main) refers to boost.o(i.boost_release) for boost_release
     main.o(i.main) refers to boost.o(i.alarm_inquire) for alarm_inquire
+    main.o(i.main) refers to boost.o(i.auto_dectect) for auto_dectect
     main.o(i.main) refers to main.o(.bss) for huart1
     main.o(i.main) refers to boost.o(.data) for arming_sta
     stm32f1xx_it.o(i.EXTI15_10_IRQHandler) refers to stm32f1xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler) for HAL_GPIO_EXTI_IRQHandler
@@ -89,7 +89,8 @@ Section Cross References
     boost.o(i.auto_dectect) refers to stm32f1xx_hal.o(i.HAL_Delay) for HAL_Delay
     boost.o(i.auto_dectect) refers to boost.o(i.get_max_voltage) for get_max_voltage
     boost.o(i.auto_dectect) refers to boost.o(i.get_extreme_value) for get_extreme_value
-    boost.o(i.auto_dectect) refers to boost.o(.data) for auto_detect_sta
+    boost.o(i.auto_dectect) refers to uart.o(i.send_sta_msg) for send_sta_msg
+    boost.o(i.auto_dectect) refers to boost.o(.data) for zone1_high_min_normal_voltage
     boost.o(i.boost_release) refers to boost.o(i.primary_boost) for primary_boost
     boost.o(i.boost_release) refers to boost.o(i.ralease_pulse) for ralease_pulse
     boost.o(i.boost_release) refers to boost.o(i.broken_detect) for broken_detect
@@ -1144,16 +1145,16 @@ Image Symbol Table
     i.get_max_voltage                        0x0800332c   Section        0  boost.o(i.get_max_voltage)
     i.get_return_voltage                     0x08003360   Section        0  boost.o(i.get_return_voltage)
     i.main                                   0x080033f0   Section        0  main.o(i.main)
-    i.primary_boost                          0x08003460   Section        0  boost.o(i.primary_boost)
-    i.ralease_pulse                          0x080034ac   Section        0  boost.o(i.ralease_pulse)
-    i.send_sta_msg                           0x0800351c   Section        0  uart.o(i.send_sta_msg)
-    i.set_sensitivity                        0x08003550   Section        0  boost.o(i.set_sensitivity)
-    i.sort_float                             0x080035bc   Section        0  boost.o(i.sort_float)
-    i.start_primary_boost                    0x08003600   Section        0  boost.o(i.start_primary_boost)
-    i.stop_primary_boost                     0x08003620   Section        0  boost.o(i.stop_primary_boost)
-    i.touch_net_dectec                       0x08003640   Section        0  boost.o(i.touch_net_dectec)
-    i.uart1_deal                             0x080037d4   Section        0  uart.o(i.uart1_deal)
-    .constdata                               0x08003860   Section       24  system_stm32f1xx.o(.constdata)
+    i.primary_boost                          0x0800346c   Section        0  boost.o(i.primary_boost)
+    i.ralease_pulse                          0x080034b8   Section        0  boost.o(i.ralease_pulse)
+    i.send_sta_msg                           0x08003528   Section        0  uart.o(i.send_sta_msg)
+    i.set_sensitivity                        0x0800355c   Section        0  boost.o(i.set_sensitivity)
+    i.sort_float                             0x080035c8   Section        0  boost.o(i.sort_float)
+    i.start_primary_boost                    0x0800360c   Section        0  boost.o(i.start_primary_boost)
+    i.stop_primary_boost                     0x0800362c   Section        0  boost.o(i.stop_primary_boost)
+    i.touch_net_dectec                       0x0800364c   Section        0  boost.o(i.touch_net_dectec)
+    i.uart1_deal                             0x080037e0   Section        0  uart.o(i.uart1_deal)
+    .constdata                               0x08003880   Section       24  system_stm32f1xx.o(.constdata)
     .data                                    0x20000000   Section        2  main.o(.data)
     uart1_rx_cnt                             0x20000000   Data           1  main.o(.data)
     uart1_package_lenth                      0x20000001   Data           1  main.o(.data)
@@ -1325,26 +1326,26 @@ Image Symbol Table
     __scatterload_zeroinit                   0x08002ed9   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
     alarm_inquire                            0x08002ee9   Thumb Code   100  boost.o(i.alarm_inquire)
     arming_disarm                            0x08002f65   Thumb Code    96  boost.o(i.arming_disarm)
-    auto_dectect                             0x0800301d   Thumb Code   342  boost.o(i.auto_dectect)
+    auto_dectect                             0x0800301d   Thumb Code   344  boost.o(i.auto_dectect)
     boost_release                            0x0800319d   Thumb Code    64  boost.o(i.boost_release)
     broken_detect                            0x080031e9   Thumb Code   240  boost.o(i.broken_detect)
     get_extreme_value                        0x08003309   Thumb Code    36  boost.o(i.get_extreme_value)
     get_max_voltage                          0x0800332d   Thumb Code    50  boost.o(i.get_max_voltage)
     get_return_voltage                       0x08003361   Thumb Code   134  boost.o(i.get_return_voltage)
-    main                                     0x080033f1   Thumb Code   100  main.o(i.main)
-    primary_boost                            0x08003461   Thumb Code    62  boost.o(i.primary_boost)
-    ralease_pulse                            0x080034ad   Thumb Code    98  boost.o(i.ralease_pulse)
-    send_sta_msg                             0x0800351d   Thumb Code    42  uart.o(i.send_sta_msg)
-    set_sensitivity                          0x08003551   Thumb Code    98  boost.o(i.set_sensitivity)
-    sort_float                               0x080035bd   Thumb Code    68  boost.o(i.sort_float)
-    start_primary_boost                      0x08003601   Thumb Code    22  boost.o(i.start_primary_boost)
-    stop_primary_boost                       0x08003621   Thumb Code    22  boost.o(i.stop_primary_boost)
-    touch_net_dectec                         0x08003641   Thumb Code   336  boost.o(i.touch_net_dectec)
-    uart1_deal                               0x080037d5   Thumb Code   128  uart.o(i.uart1_deal)
-    AHBPrescTable                            0x08003860   Data          16  system_stm32f1xx.o(.constdata)
-    APBPrescTable                            0x08003870   Data           8  system_stm32f1xx.o(.constdata)
-    Region$$Table$$Base                      0x08003878   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08003898   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x080033f1   Thumb Code   106  main.o(i.main)
+    primary_boost                            0x0800346d   Thumb Code    62  boost.o(i.primary_boost)
+    ralease_pulse                            0x080034b9   Thumb Code    98  boost.o(i.ralease_pulse)
+    send_sta_msg                             0x08003529   Thumb Code    42  uart.o(i.send_sta_msg)
+    set_sensitivity                          0x0800355d   Thumb Code    98  boost.o(i.set_sensitivity)
+    sort_float                               0x080035c9   Thumb Code    68  boost.o(i.sort_float)
+    start_primary_boost                      0x0800360d   Thumb Code    22  boost.o(i.start_primary_boost)
+    stop_primary_boost                       0x0800362d   Thumb Code    22  boost.o(i.stop_primary_boost)
+    touch_net_dectec                         0x0800364d   Thumb Code   336  boost.o(i.touch_net_dectec)
+    uart1_deal                               0x080037e1   Thumb Code   144  uart.o(i.uart1_deal)
+    AHBPrescTable                            0x08003880   Data          16  system_stm32f1xx.o(.constdata)
+    APBPrescTable                            0x08003890   Data           8  system_stm32f1xx.o(.constdata)
+    Region$$Table$$Base                      0x08003898   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080038b8   Number         0  anon$$obj.o(Region$$Table)
     arming_sta                               0x20000004   Data           1  boost.o(.data)
     zone_mode                                0x20000005   Data           1  boost.o(.data)
     protection_level                         0x20000006   Data           1  boost.o(.data)
@@ -1404,9 +1405,9 @@ Memory Map of the image
 
   Image Entry point : 0x080000ed
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000038fc, Max: 0x00010000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000391c, Max: 0x00010000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00003898, Max: 0x00010000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000038b8, Max: 0x00010000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1557,32 +1558,32 @@ Memory Map of the image
     0x0800332c   0x0800332c   0x00000032   Code   RO          374    i.get_max_voltage   boost.o
     0x0800335e   0x0800335e   0x00000002   PAD
     0x08003360   0x08003360   0x00000090   Code   RO          375    i.get_return_voltage  boost.o
-    0x080033f0   0x080033f0   0x00000070   Code   RO           15    i.main              main.o
-    0x08003460   0x08003460   0x0000004c   Code   RO          376    i.primary_boost     boost.o
-    0x080034ac   0x080034ac   0x00000070   Code   RO          377    i.ralease_pulse     boost.o
-    0x0800351c   0x0800351c   0x00000034   Code   RO          483    i.send_sta_msg      uart.o
-    0x08003550   0x08003550   0x0000006c   Code   RO          378    i.set_sensitivity   boost.o
-    0x080035bc   0x080035bc   0x00000044   Code   RO          379    i.sort_float        boost.o
-    0x08003600   0x08003600   0x00000020   Code   RO          380    i.start_primary_boost  boost.o
-    0x08003620   0x08003620   0x00000020   Code   RO          381    i.stop_primary_boost  boost.o
-    0x08003640   0x08003640   0x00000194   Code   RO          382    i.touch_net_dectec  boost.o
-    0x080037d4   0x080037d4   0x0000008c   Code   RO          484    i.uart1_deal        uart.o
-    0x08003860   0x08003860   0x00000018   Data   RO         2966    .constdata          system_stm32f1xx.o
-    0x08003878   0x08003878   0x00000020   Data   RO         3032    Region$$Table       anon$$obj.o
+    0x080033f0   0x080033f0   0x0000007c   Code   RO           15    i.main              main.o
+    0x0800346c   0x0800346c   0x0000004c   Code   RO          376    i.primary_boost     boost.o
+    0x080034b8   0x080034b8   0x00000070   Code   RO          377    i.ralease_pulse     boost.o
+    0x08003528   0x08003528   0x00000034   Code   RO          483    i.send_sta_msg      uart.o
+    0x0800355c   0x0800355c   0x0000006c   Code   RO          378    i.set_sensitivity   boost.o
+    0x080035c8   0x080035c8   0x00000044   Code   RO          379    i.sort_float        boost.o
+    0x0800360c   0x0800360c   0x00000020   Code   RO          380    i.start_primary_boost  boost.o
+    0x0800362c   0x0800362c   0x00000020   Code   RO          381    i.stop_primary_boost  boost.o
+    0x0800364c   0x0800364c   0x00000194   Code   RO          382    i.touch_net_dectec  boost.o
+    0x080037e0   0x080037e0   0x000000a0   Code   RO          484    i.uart1_deal        uart.o
+    0x08003880   0x08003880   0x00000018   Data   RO         2966    .constdata          system_stm32f1xx.o
+    0x08003898   0x08003898   0x00000020   Data   RO         3032    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08003898, Size: 0x000005b8, Max: 0x00005000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080038b8, Size: 0x000005b8, Max: 0x00005000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x08003898   0x00000002   Data   RW           17    .data               main.o
-    0x20000002   0x0800389a   0x00000002   PAD
-    0x20000004   0x0800389c   0x0000004d   Data   RW          383    .data               boost.o
-    0x20000051   0x080038e9   0x00000001   Data   RW          486    .data               uart.o
-    0x20000052   0x080038ea   0x00000002   PAD
-    0x20000054   0x080038ec   0x00000009   Data   RW         1904    .data               stm32f1xx_hal.o
-    0x2000005d   0x080038f5   0x00000003   PAD
-    0x20000060   0x080038f8   0x00000004   Data   RW         2967    .data               system_stm32f1xx.o
+    0x20000000   0x080038b8   0x00000002   Data   RW           17    .data               main.o
+    0x20000002   0x080038ba   0x00000002   PAD
+    0x20000004   0x080038bc   0x0000004d   Data   RW          383    .data               boost.o
+    0x20000051   0x08003909   0x00000001   Data   RW          486    .data               uart.o
+    0x20000052   0x0800390a   0x00000002   PAD
+    0x20000054   0x0800390c   0x00000009   Data   RW         1904    .data               stm32f1xx_hal.o
+    0x2000005d   0x08003915   0x00000003   PAD
+    0x20000060   0x08003918   0x00000004   Data   RW         2967    .data               system_stm32f1xx.o
     0x20000064        -       0x000000f0   Zero   RW           16    .bss                main.o
     0x20000154        -       0x00000064   Zero   RW          485    .bss                uart.o
     0x200001b8        -       0x00000400   Zero   RW         2954    STACK               startup_stm32f103xb.o
@@ -1595,8 +1596,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      2118        350          0         77          0      12401   boost.o
-      1588        252          0          2        240     453931   main.o
+      2118        348          0         77          0      12401   boost.o
+      1600        258          0          2        240     453939   main.o
         36          8        236          0       1024        768   startup_stm32f103xb.o
        192         36          0          9          0       3853   stm32f1xx_hal.o
       1570         62          0          0          0       6344   stm32f1xx_hal_adc.o
@@ -1611,10 +1612,10 @@ Image component sizes
       1460         12          0          0          0       8402   stm32f1xx_hal_uart.o
        152         14          0          0          0       5723   stm32f1xx_it.o
         88         18         24          4          0       1175   system_stm32f1xx.o
-       192         30          0          1        100       1801   uart.o
+       212         34          0          1        100       1817   uart.o
 
     ----------------------------------------------------------------------
-     13720       1100        292        100       1364     557274   Object Totals
+     13752       1108        292        100       1364     557298   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         22          0          0          7          0          0   (incl. Padding)
 
@@ -1661,15 +1662,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     14196       1116        292        100       1364     551738   Grand Totals
-     14196       1116        292        100       1364     551738   ELF Image Totals
-     14196       1116        292        100          0          0   ROM Totals
+     14228       1124        292        100       1364     551762   Grand Totals
+     14228       1124        292        100       1364     551762   ELF Image Totals
+     14228       1124        292        100          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                14488 (  14.15kB)
+    Total RO  Size (Code + RO Data)                14520 (  14.18kB)
     Total RW  Size (RW Data + ZI Data)              1464 (   1.43kB)
-    Total ROM Size (Code + RO Data + RW Data)      14588 (  14.25kB)
+    Total ROM Size (Code + RO Data + RW Data)      14620 (  14.28kB)
 
 ==============================================================================
 
