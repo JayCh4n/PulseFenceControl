@@ -4,6 +4,7 @@
 #include "main.h"
 #include "stm32f1xx_hal.h"
 #include "boost.h"
+#include "flash.h"
 
 #define AMING_DISARM				0x01			//布防/撤防命令   		数据：0x00 撤防   0x01布防
 #define SINGLE_DOUBLE_ZONE	0x02			//单/双防区命令				数据：0x01 单			0x02双

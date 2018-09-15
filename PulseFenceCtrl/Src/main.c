@@ -43,6 +43,7 @@
 /* USER CODE BEGIN Includes */
 #include "boost.h"
 #include "uart.h"
+#include "flash.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -86,7 +87,8 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	static uint8_t cycle_cnt = 0;
+	
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -115,27 +117,21 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-	HAL_Delay(1000);
+	HAL_Delay(500);
+	
+	read_data_from_flash();
 	
 	__HAL_UART_ENABLE_IT(&huart1, UART_IT_TC);
 	__HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
 	
 	HAL_TIM_Base_Start_IT(&htim1);
 	
-//	set_primary_boost_mode(HIGH_VOLTAGE_MODE);
-//	start_primary_boost();
-//	while(!HAL_GPIO_ReadPin(DETECT_LEVEL_LOW_GPIO_Port, DETECT_LEVEL_LOW_Pin));
-////	while(!HAL_GPIO_ReadPin(DETECT_LEVEL_HIGH_GPIO_Port, DETECT_LEVEL_HIGH_Pin));
-//	stop_primary_boost();
-//	HAL_GPIO_WritePin(ZONE1_PULSE_RELEASE_PIN_GPIO_Port, ZONE1_PULSE_RELEASE_PIN_Pin, GPIO_PIN_RESET);
-//	HAL_Delay(1000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
-
+  { 
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -149,11 +145,16 @@ int main(void)
 		{
 			auto_dectect();
 		}
-//		if(HAL_GPIO_ReadPin(DETECT_LEVEL_HIGH_GPIO_Port, DETECT_LEVEL_HIGH_Pin))
-//		{
-//			stop_primary_boost();
-//		}
-
+		
+		if(++cycle_cnt >= 5)
+		{
+			cycle_cnt = 0;
+			if(write_flash_flag)
+			{
+				write_flash_flag = 0;
+				STMFLASH_Write(PAGE_ADDR, (uint16_t *)&flash_data_struct, FLASH_DATA_SIZE);
+			}
+		}
   }
   /* USER CODE END 3 */
 
@@ -413,7 +414,6 @@ static void MX_GPIO_Init(void)
   */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	
 	if(htim->Instance == htim1.Instance)
 	{
 		if(arming_sta)

@@ -31,3 +31,4 @@ pulsefencectrl\uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.
 pulsefencectrl\uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 pulsefencectrl\uart.o: ..\Bsp\boost.h
 pulsefencectrl\uart.o: ..\Bsp\uart.h
+pulsefencectrl\uart.o: ../Inc/flash.h

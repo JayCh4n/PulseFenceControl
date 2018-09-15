@@ -2,6 +2,7 @@
 "pulsefencectrl\main.o"
 "pulsefencectrl\stm32f1xx_it.o"
 "pulsefencectrl\stm32f1xx_hal_msp.o"
+"pulsefencectrl\flash.o"
 "pulsefencectrl\boost.o"
 "pulsefencectrl\uart.o"
 "pulsefencectrl\stm32f1xx_hal_uart.o"

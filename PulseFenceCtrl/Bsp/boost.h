@@ -54,6 +54,18 @@ extern uint16_t broken_short_b4_line_cnt;
 extern uint16_t zone1_alarm_delay_time;
 extern uint16_t zone2_alarm_delay_time;
 
+extern float zone1_high_max_normal_voltage;
+extern float zone1_high_min_normal_voltage;
+
+extern float zone1_low_max_normal_voltage;
+extern float zone1_low_min_normal_voltage;
+
+extern float zone2_high_max_normal_voltage;
+extern float zone2_high_min_normal_voltage;
+
+extern float zone2_low_max_normal_voltage;
+extern float zone2_low_min_normal_voltage;
+
 extern uint8_t auto_detect_sta;
 
 void start_primary_boost(void);

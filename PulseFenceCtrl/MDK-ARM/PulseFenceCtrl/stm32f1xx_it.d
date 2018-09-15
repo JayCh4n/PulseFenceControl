@@ -32,3 +32,4 @@ pulsefencectrl\stm32f1xx_it.o: ../Inc/stm32f1xx_it.h
 pulsefencectrl\stm32f1xx_it.o: ..\Bsp\uart.h
 pulsefencectrl\stm32f1xx_it.o: ..\Bsp\boost.h
 pulsefencectrl\stm32f1xx_it.o: ..\Bsp\uart.h
+pulsefencectrl\stm32f1xx_it.o: ../Inc/flash.h
