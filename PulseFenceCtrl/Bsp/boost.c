@@ -214,22 +214,22 @@ void broken_detect(uint8_t zone_num)
 
 	if(zone_num == ZONE1)
 	{
-			if(broken_short_a1_line_cnt <= 1)
-			{
-				broken_short_a1_line_cnt = 0;
-			}
-			if(broken_short_a2_line_cnt <= 1)
-			{
-				broken_short_a2_line_cnt = 0;
-			}
-			if(broken_short_a3_line_cnt <= 1)
-			{
-				broken_short_a3_line_cnt = 0;
-			}
-			if(broken_short_a4_line_cnt <= 1)
-			{
-				broken_short_a4_line_cnt = 0;
-			}
+//			if(broken_short_a1_line_cnt <= 1)
+//			{
+//				broken_short_a1_line_cnt = 0;
+//			}
+//			if(broken_short_a2_line_cnt <= 1)
+//			{
+//				broken_short_a2_line_cnt = 0;
+//			}
+//			if(broken_short_a3_line_cnt <= 1)
+//			{
+//				broken_short_a3_line_cnt = 0;
+//			}
+//			if(broken_short_a4_line_cnt <= 1)
+//			{
+//				broken_short_a4_line_cnt = 0;
+//			}
 			
 			/*如果有一条线或多条没有检测到 则计数值不会增加 所以相乘等于0  报警*/
 			if(!(broken_short_a1_line_cnt * broken_short_a2_line_cnt * broken_short_a3_line_cnt * broken_short_a4_line_cnt))
@@ -262,22 +262,22 @@ void broken_detect(uint8_t zone_num)
 	}
 	else if(zone_num == ZONE2)
 	{
-			if(broken_short_b1_line_cnt <= 1)
-			{
-				broken_short_b1_line_cnt = 0;
-			}
-			if(broken_short_b2_line_cnt <= 1)
-			{
-				broken_short_b2_line_cnt = 0;
-			}
-			if(broken_short_b3_line_cnt <= 1)
-			{
-				broken_short_b3_line_cnt = 0;
-			}
-			if(broken_short_b4_line_cnt <= 1)
-			{
-				broken_short_b4_line_cnt = 0;
-			}
+//			if(broken_short_b1_line_cnt <= 1)
+//			{
+//				broken_short_b1_line_cnt = 0;
+//			}
+//			if(broken_short_b2_line_cnt <= 1)
+//			{
+//				broken_short_b2_line_cnt = 0;
+//			}
+//			if(broken_short_b3_line_cnt <= 1)
+//			{
+//				broken_short_b3_line_cnt = 0;
+//			}
+//			if(broken_short_b4_line_cnt <= 1)
+//			{
+//				broken_short_b4_line_cnt = 0;
+//			}
 		
 			if(!(broken_short_b1_line_cnt * broken_short_b2_line_cnt * broken_short_b3_line_cnt * broken_short_b4_line_cnt))
 			{

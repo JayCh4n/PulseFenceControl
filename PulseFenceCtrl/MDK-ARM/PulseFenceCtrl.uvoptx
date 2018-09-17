@@ -157,9 +157,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>485</LineNumber>
+          <LineNumber>482</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134233700</Address>
+          <Address>134233696</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -168,23 +168,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>E:\鍛ㄧ晫鎶ヨ\绋嬪簭\PulseFenceControl\PulseFenceCtrl\Bsp\boost.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\PulseFenceCtrl\../Bsp/boost.c\485</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>482</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\Bsp\boost.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\PulseFenceCtrl\../Bsp/boost.c\482</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
