@@ -16,6 +16,8 @@
 #define ZONE1								1
 #define ZONE2								2
 
+#define FILTER_QUANTITY			5
+
 typedef enum
 {
 	NORMAL_STA = 0,

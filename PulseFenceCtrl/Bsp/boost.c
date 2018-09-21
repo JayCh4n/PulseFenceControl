@@ -55,7 +55,86 @@ float zone2_high_min_normal_voltage;
 float zone2_low_max_normal_voltage;
 float zone2_low_min_normal_voltage;
 
+/*电压检测滤波缓存*/
+float zone1_high_voltage_buff[FILTER_QUANTITY];
+float zone1_low_voltage_buff[FILTER_QUANTITY];
+float zone2_high_voltage_buff[FILTER_QUANTITY];
+float zone2_low_voltage_buff[FILTER_QUANTITY];
+
+float view_voltage;
+
 uint8_t auto_detect_sta = 0;
+
+uint8_t zone1_high_voltage_filter_finish = 0;	//防区1高压滤波完成
+uint8_t zone1_low_voltage_filter_finish = 0;		//防区1低压滤波完成 
+uint8_t zone2_high_voltage_filter_finish = 0;	//防区2高压滤波完成
+uint8_t zone2_low_voltage_filter_finish = 0;		//防区2低压滤波完成
+
+uint8_t zone1_fliter_finish = 0;
+uint8_t zone2_fliter_finish = 0;
+
+/*电压检测计数*/
+uint8_t zone1_high_voltage_detect_cnt = 0;
+uint8_t zone1_low_voltage_detect_cnt = 0;
+uint8_t zone2_high_voltage_detect_cnt = 0;
+uint8_t zone2_low_voltage_detect_cnt = 0;
+
+/*从小到大排序*/
+void sort_float(float *data, uint16_t data_size)
+{
+	uint16_t i, j;
+	float temp;
+	
+	for(i=0; i<data_size; i++)
+	{
+		for(j=i+1; j<data_size; j++)
+		{
+			if(*(data+i)>*(data+j))
+			{
+					temp = *(data+i);
+					*(data+i) = *(data+j);
+					*(data+j) = temp;
+			}
+		}
+	}
+}
+
+/*获取做大值 最小值*/
+void get_extreme_value(float *max_value, float *min_value, float *data, uint16_t data_size)
+{
+	sort_float(data, data_size);
+	*max_value = *(data + (data_size-1));
+	*min_value = *data;
+}
+
+/*
+功能：	滤波： 去掉最大值  去掉最小值 求平均数
+返回值：滤波值
+*/
+float filter(float *data, uint16_t data_size)
+{
+	uint16_t i;
+	float sum = 0.0f;
+	float filter_value = 0.0f;
+	float data_temp[FILTER_QUANTITY];
+	
+	for(i=0; i<data_size; i++)
+	{
+		*(data_temp + i) = *(data + i);
+	}
+	
+	sort_float(data_temp, data_size);
+	for(i=1; i<(data_size-1); i++)
+	{
+		sum += *(data_temp+i);
+	}
+	
+	filter_value = sum / (data_size-2);
+	
+	return filter_value;
+}
+
+
 /*开始前级升压*/
 void start_primary_boost(void)
 {
@@ -393,6 +472,17 @@ float get_max_voltage(uint8_t zone_num)
 	return voltage;
 }
 
+void insert(float *array, float data, uint16_t data_size)
+{
+	uint16_t i;
+	
+	for(i=(data_size-1); i>=1; i--)
+	{
+		array[i] = array[i-1];
+	}
+	array[0] = data;
+}
+
 void touch_net_dectec(uint8_t zone_num)
 {
 	float voltage;
@@ -404,84 +494,76 @@ void touch_net_dectec(uint8_t zone_num)
 	float zone1_short_voltage;
 	float zone2_short_voltage;
 	
-//	float p_touch_net_voltage;				//正线触网电压
-//	float n_touch_net_voltage;					//负线触网电压
-	
 	if(protection_level == HIGH_VOLTAGE_MODE)
 	{
-		zone1_max_normal_voltage = zone1_high_max_normal_voltage + 0.1f;
-		zone1_min_normal_voltage = zone1_high_min_normal_voltage - 0.1f;
+		zone1_max_normal_voltage = zone1_high_max_normal_voltage;
+		zone1_min_normal_voltage = zone1_high_min_normal_voltage;
 	
-		zone2_max_normal_voltage = zone2_high_max_normal_voltage + 0.1f;
-		zone2_min_normal_voltage = zone2_high_min_normal_voltage - 0.1f;
+		zone2_max_normal_voltage = zone2_high_max_normal_voltage + 0.02;
+		zone2_min_normal_voltage = zone2_high_min_normal_voltage - 0.02;
 		
 		zone1_short_voltage = 0.04;
-		zone2_short_voltage = 0.005;
+		zone2_short_voltage = 0.04;
 //		n_touch_net_voltage = 0.91f;
 	}
 	else if(protection_level == LOW_VOLTAGE_MODE)
 	{
-		zone1_max_normal_voltage = zone1_low_max_normal_voltage + 0.03;
-		zone1_min_normal_voltage = zone1_low_min_normal_voltage - 0.03;
+		zone1_max_normal_voltage = zone1_low_max_normal_voltage;
+		zone1_min_normal_voltage = zone1_low_min_normal_voltage;
 		
-		zone2_max_normal_voltage = zone2_low_max_normal_voltage + 0.03;
-		zone2_min_normal_voltage = zone2_low_min_normal_voltage - 0.03;		
+		zone2_max_normal_voltage = zone2_low_max_normal_voltage;
+		zone2_min_normal_voltage = zone2_low_min_normal_voltage;		
 		
 		zone1_short_voltage = 0.04;
-		zone2_short_voltage = 0.002;
+		zone2_short_voltage = 0.04;
 		
 //		n_touch_net_voltage = 0.2f;
 	}
 	
 	voltage = get_max_voltage(zone_num);
-//	if(zone_num == ZONE1)
-//	{
-//	/*	 ((		      负线触网					)    || (                       正线触网                            )) && 触网模式		*/
-//		if(((voltage >= n_touch_net_voltage) || ((voltage > short_voltage) && (voltage < zone1_min_normal_voltage))) && touch_net_mode)
-//		{
-//			zone1_alarm_sta = TOUCH_NET_STA;
-//		}
-//		else if((voltage > zone1_max_normal_voltage) && (voltage < n_touch_net_voltage) && touch_net_mode)
-//		{
-//			zone1_alarm_sta = BYPASS_STA;
-//		}
-//		else if((voltage >= zone1_min_normal_voltage) && (voltage <= zone1_max_normal_voltage))
-//		{
-//			zone1_short_mask = 1;
-//			zone1_alarm_sta = NORMAL_STA;		
-//		}
-//		else
-//		{
-//			zone1_short_mask = 0;
-//			zone1_alarm_sta = NORMAL_STA;			
-//		}
-//	}
-//	else if(zone_num == ZONE2)
-//	{
-//	/*	 ((		      负线触网					)    || (                       正线触网                            )) && 触网模式		*/
-//		if(((voltage >= n_touch_net_voltage) || ((voltage > short_voltage) && (voltage < zone2_min_normal_voltage))) && touch_net_mode)
-//		{
-//			zone2_alarm_sta = TOUCH_NET_STA;
-//		}
-//		else if((voltage > zone2_max_normal_voltage) && (voltage < n_touch_net_voltage) && touch_net_mode)
-//		{
-//			zone2_alarm_sta = BYPASS_STA;
-//		}
-//		else if((voltage >= zone2_min_normal_voltage) && (voltage <= zone2_max_normal_voltage))
-//		{
-//			zone2_short_mask = 1;
-//			zone2_alarm_sta = NORMAL_STA;		
-//		}
-//		else
-//		{
-//			zone2_short_mask = 0;
-//			zone2_alarm_sta = NORMAL_STA;			
-//		}	
-//	}
-
+	
 	if(zone_num == ZONE1)
 	{
-		if((((voltage > zone1_max_normal_voltage) || (voltage < zone1_min_normal_voltage))&&(voltage > zone1_short_voltage)) && touch_net_mode)
+		if(protection_level == HIGH_VOLTAGE_MODE)
+		{
+			insert(zone1_high_voltage_buff, voltage, FILTER_QUANTITY);
+			
+			if(!zone1_high_voltage_filter_finish)												//如果没有完成滤波（检测十次）
+			{
+				zone1_fliter_finish = 0;
+				if(++zone1_high_voltage_detect_cnt >= FILTER_QUANTITY)
+				{
+					zone1_high_voltage_filter_finish = 1;
+					zone1_fliter_finish = 1;
+				}
+			}
+			
+			if(zone1_high_voltage_filter_finish)
+			{
+				voltage = filter(zone1_high_voltage_buff, FILTER_QUANTITY);
+			}
+		}
+		else if(protection_level == LOW_VOLTAGE_MODE)
+		{
+			insert(zone1_low_voltage_buff, voltage, FILTER_QUANTITY);
+			
+			if(!zone1_low_voltage_filter_finish)	//如果没有完成滤波（检测十次）
+			{
+				zone1_fliter_finish = 0;
+				if(++zone1_low_voltage_detect_cnt >= FILTER_QUANTITY)
+				{
+					zone1_low_voltage_filter_finish = 1;
+					zone1_fliter_finish = 1;
+				}
+			}
+			
+			if(zone1_low_voltage_filter_finish)
+			{
+				voltage = filter(zone1_low_voltage_buff, FILTER_QUANTITY);
+			}			
+		}
+		
+		if((((voltage > zone1_max_normal_voltage) || (voltage < zone1_min_normal_voltage))&&(voltage > zone1_short_voltage)) && touch_net_mode && zone1_fliter_finish)
 		{
 			zone1_alarm_sta = TOUCH_NET_STA;
 		}
@@ -498,7 +580,46 @@ void touch_net_dectec(uint8_t zone_num)
 	}
 	else if(zone_num == ZONE2)
 	{
-		if((((voltage > zone2_max_normal_voltage) || (voltage < zone2_min_normal_voltage))&&(voltage > zone2_short_voltage)) && touch_net_mode)
+		if(protection_level == HIGH_VOLTAGE_MODE)
+		{
+			insert(zone2_high_voltage_buff, voltage, FILTER_QUANTITY);
+			
+			if(!zone2_high_voltage_filter_finish)	//如果没有完成滤波（检测十次）
+			{
+				zone2_fliter_finish = 0;
+				if(++zone2_high_voltage_detect_cnt >= FILTER_QUANTITY)
+				{
+					zone2_high_voltage_filter_finish = 1;
+					zone2_fliter_finish = 1;
+				}
+			}
+			
+			if(zone2_high_voltage_filter_finish)
+			{
+				voltage = filter(zone2_high_voltage_buff, FILTER_QUANTITY);
+			}
+		}
+		else if(protection_level == LOW_VOLTAGE_MODE)
+		{
+			insert(zone2_low_voltage_buff, voltage, FILTER_QUANTITY);
+			
+			if(!zone2_low_voltage_filter_finish)	//如果没有完成滤波（检测十次）
+			{
+				zone2_fliter_finish = 0;
+				if(++zone2_low_voltage_detect_cnt >= FILTER_QUANTITY)
+				{
+					zone2_low_voltage_filter_finish = 1;
+					zone2_fliter_finish = 1;
+				}
+			}
+			
+			if(zone2_low_voltage_filter_finish)
+			{
+				voltage = filter(zone2_low_voltage_buff, FILTER_QUANTITY);
+			}			
+		}
+		
+		if((((voltage > zone2_max_normal_voltage) || (voltage < zone2_min_normal_voltage))&&(voltage > zone2_short_voltage)) && touch_net_mode && zone2_fliter_finish)
 		{
 			zone2_alarm_sta = TOUCH_NET_STA;
 		}
@@ -513,34 +634,7 @@ void touch_net_dectec(uint8_t zone_num)
 			zone2_alarm_sta = NORMAL_STA;
 		}		
 	}
-}
-
-/*从小到大排序*/
-void sort_float(float *data, uint16_t data_size)
-{
-	uint16_t i, j;
-	float temp;
-	
-	for(i=0; i<data_size; i++)
-	{
-		for(j=i+1; j<data_size; j++)
-		{
-			if(data[i]>data[j])
-			{
-					temp = data[i];
-					data[i] = data[j];
-					data[j] = temp;
-			}
-		}
-	}
-}
-
-/*获取做大值 最小值*/
-void get_extreme_value(float *max_value, float *min_value, float *data, uint16_t data_size)
-{
-	sort_float(data, data_size);
-	*max_value = data[data_size - 1];
-	*min_value = data[0];
+	view_voltage = voltage;
 }
 
 void auto_dectect(void)
@@ -560,7 +654,7 @@ void auto_dectect(void)
 		zone1_high_normal_voltage[i] = get_max_voltage(ZONE1);
 		HAL_Delay(20);
 		HAL_GPIO_WritePin(ZONE1_PULSE_RELEASE_PIN_GPIO_Port, ZONE1_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);
-		HAL_Delay(100);
+		HAL_Delay(300);
 	}
 
 	for(i=0; i<50; i++)
@@ -571,7 +665,7 @@ void auto_dectect(void)
 		zone1_low_normal_voltage[i] = get_max_voltage(ZONE1);
 		HAL_Delay(20);
 		HAL_GPIO_WritePin(ZONE1_PULSE_RELEASE_PIN_GPIO_Port, ZONE1_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);
-		HAL_Delay(100);
+		HAL_Delay(300);
 	}
 	
 	for(i=0; i<50; i++)
@@ -582,7 +676,7 @@ void auto_dectect(void)
 		zone2_high_normal_voltage[i] = get_max_voltage(ZONE2);
 		HAL_Delay(20);
 		HAL_GPIO_WritePin(ZONE2_PULSE_RELEASE_PIN_GPIO_Port, ZONE2_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);
-		HAL_Delay(100);
+		HAL_Delay(300);
 	}
 	
 	for(i=0; i<50; i++)
@@ -593,7 +687,7 @@ void auto_dectect(void)
 		zone2_low_normal_voltage[i] = get_max_voltage(ZONE2);
 		HAL_Delay(20);
 		HAL_GPIO_WritePin(ZONE2_PULSE_RELEASE_PIN_GPIO_Port, ZONE2_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);
-		HAL_Delay(100);
+		HAL_Delay(300);
 	}
 	
 	get_extreme_value(&zone1_high_max_normal_voltage,&zone1_high_min_normal_voltage, zone1_high_normal_voltage, 50);
