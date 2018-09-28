@@ -16,7 +16,7 @@
 #define ZONE1								1
 #define ZONE2								2
 
-#define FILTER_QUANTITY			5
+#define MAX_FILTER_QUANTITY			8
 
 typedef enum
 {
@@ -52,6 +52,9 @@ extern uint16_t broken_short_b1_line_cnt;
 extern uint16_t broken_short_b2_line_cnt;
 extern uint16_t broken_short_b3_line_cnt;
 extern uint16_t broken_short_b4_line_cnt;
+
+extern uint8_t zone1_touch_net_cnt;	//触网计数
+extern uint8_t zone2_touch_net_cnt;	//触网计数
 
 extern uint16_t zone1_alarm_delay_time;
 extern uint16_t zone2_alarm_delay_time;

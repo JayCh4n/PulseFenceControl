@@ -3,7 +3,7 @@
 <title>Static Call Graph - [PulseFenceCtrl\PulseFenceCtrl.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image PulseFenceCtrl\PulseFenceCtrl.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Sep 20 17:17:18 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Sep 28 17:40:44 2018
 <BR><P>
 <H3>Maximum Stack Usage =        948 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1059,7 +1059,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[b2]"></a>boost_release</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, boost.o(i.boost_release))
-<BR><BR>[Stack]<UL><LI>Max Depth = 212<LI>Call Chain = boost_release &rArr; ralease_pulse &rArr; touch_net_dectec &rArr; get_max_voltage &rArr; get_return_voltage &rArr; HAL_ADC_PollForConversion &rArr; HAL_RCCEx_GetPeriphCLKFreq &rArr; HAL_RCC_GetPCLK2Freq
+<BR><BR>[Stack]<UL><LI>Max Depth = 228<LI>Call Chain = boost_release &rArr; ralease_pulse &rArr; touch_net_dectec &rArr; get_max_voltage &rArr; get_return_voltage &rArr; HAL_ADC_PollForConversion &rArr; HAL_RCCEx_GetPeriphCLKFreq &rArr; HAL_RCC_GetPCLK2Freq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ralease_pulse
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;primary_boost
@@ -1072,8 +1072,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;boost_release
 </UL>
 
-<P><STRONG><a name="[b5]"></a>filter</STRONG> (Thumb, 94 bytes, Stack size 48 bytes, boost.o(i.filter))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = filter &rArr; sort_float
+<P><STRONG><a name="[b5]"></a>filter</STRONG> (Thumb, 98 bytes, Stack size 64 bytes, boost.o(i.filter))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = filter &rArr; sort_float
 </UL>
 <BR>[Calls]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
 <LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
@@ -1155,7 +1155,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[b3]"></a>ralease_pulse</STRONG> (Thumb, 98 bytes, Stack size 8 bytes, boost.o(i.ralease_pulse))
-<BR><BR>[Stack]<UL><LI>Max Depth = 204<LI>Call Chain = ralease_pulse &rArr; touch_net_dectec &rArr; get_max_voltage &rArr; get_return_voltage &rArr; HAL_ADC_PollForConversion &rArr; HAL_RCCEx_GetPeriphCLKFreq &rArr; HAL_RCC_GetPCLK2Freq
+<BR><BR>[Stack]<UL><LI>Max Depth = 220<LI>Call Chain = ralease_pulse &rArr; touch_net_dectec &rArr; get_max_voltage &rArr; get_return_voltage &rArr; HAL_ADC_PollForConversion &rArr; HAL_RCCEx_GetPeriphCLKFreq &rArr; HAL_RCC_GetPCLK2Freq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;touch_net_dectec
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
@@ -1215,8 +1215,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;primary_boost
 </UL>
 
-<P><STRONG><a name="[c1]"></a>touch_net_dectec</STRONG> (Thumb, 628 bytes, Stack size 56 bytes, boost.o(i.touch_net_dectec))
-<BR><BR>[Stack]<UL><LI>Max Depth = 196<LI>Call Chain = touch_net_dectec &rArr; get_max_voltage &rArr; get_return_voltage &rArr; HAL_ADC_PollForConversion &rArr; HAL_RCCEx_GetPeriphCLKFreq &rArr; HAL_RCC_GetPCLK2Freq
+<P><STRONG><a name="[c1]"></a>touch_net_dectec</STRONG> (Thumb, 792 bytes, Stack size 72 bytes, boost.o(i.touch_net_dectec))
+<BR><BR>[Stack]<UL><LI>Max Depth = 212<LI>Call Chain = touch_net_dectec &rArr; get_max_voltage &rArr; get_return_voltage &rArr; HAL_ADC_PollForConversion &rArr; HAL_RCCEx_GetPeriphCLKFreq &rArr; HAL_RCC_GetPCLK2Freq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
@@ -1231,7 +1231,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ralease_pulse
 </UL>
 
-<P><STRONG><a name="[92]"></a>uart1_deal</STRONG> (Thumb, 144 bytes, Stack size 16 bytes, uart.o(i.uart1_deal))
+<P><STRONG><a name="[92]"></a>uart1_deal</STRONG> (Thumb, 154 bytes, Stack size 16 bytes, uart.o(i.uart1_deal))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = uart1_deal &rArr; send_sta_msg &rArr; HAL_UART_Transmit_IT
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_sta_msg

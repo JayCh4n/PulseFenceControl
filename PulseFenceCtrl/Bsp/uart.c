@@ -16,7 +16,10 @@ void uart1_deal(uint8_t *data_package)
 	
 	switch(command)
 	{
-		case AMING_DISARM: arming_disarm(data_package[4]); 
+		case AMING_DISARM: 
+			arming_disarm(data_package[4]);
+			zone1_touch_net_cnt = 0;
+			zone2_touch_net_cnt = 0;
 			send_sta_msg(AMING_DISARM, data_package[4]); 
 			break;
 		case SINGLE_DOUBLE_ZONE: zone_mode = data_package[4];	send_sta_msg(SINGLE_DOUBLE_ZONE, data_package[4]);
