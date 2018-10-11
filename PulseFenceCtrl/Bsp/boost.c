@@ -526,8 +526,8 @@ void touch_net_dectec(uint8_t zone_num)
 		zone2_max_normal_voltage = zone2_high_max_normal_voltage + 0.02;
 		zone2_min_normal_voltage = zone2_high_min_normal_voltage - 0.02;
 		
-		zone1_short_voltage = 0.04;
-		zone2_short_voltage = 0.04;
+		zone1_short_voltage = 0.08;
+		zone2_short_voltage = 0.08;
 	}
 	else if(protection_level == LOW_VOLTAGE_MODE)
 	{
