@@ -21,7 +21,9 @@
 typedef enum
 {
 	NORMAL_STA = 0,
-	BROKEN_STA,			
+	P_BROKEN_STA,
+	N_BROKEN_STA,
+	PN_BROKEN_STA,
 	SHORT_STA,			
 	TOUCH_NET_STA,
 	BYPASS_STA
@@ -37,6 +39,10 @@ extern uint8_t release_pulse_time_cnt;
 extern uint16_t zone1_alarm_delay_cnt;
 extern uint16_t zone2_alarm_delay_cnt;
 //extern uint8_t broken_short_detect_time_cnt;
+
+extern uint8_t targe_delay_flag;
+extern uint32_t targe_delay_time;	//¥•∑¢—” ±
+extern uint32_t targe_delay_time_cnt;
 
 extern uint8_t boost_finish_flag;
 extern uint8_t boost_delay_finish_mask;

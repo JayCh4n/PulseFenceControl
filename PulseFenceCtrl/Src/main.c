@@ -459,6 +459,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 					zone2_alarm_delay_finish_mask = 1; 
 				}			
 			}
+			
+			if(++targe_delay_time_cnt >= targe_delay_time)
+			{
+				targe_delay_time_cnt = 0;
+				targe_delay_flag = 0;
+			}
+			
 		}
 	}
 }

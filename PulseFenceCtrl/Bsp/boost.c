@@ -37,6 +37,10 @@ uint8_t zone2_touch_net_cnt = 0;	//触网计数
 uint16_t zone1_alarm_delay_time = 90;		// 根据灵敏度计算得出延时报警值  * 10ms  默认：灵敏度为3  3:900ms   2:2.5s  1:5s
 uint16_t zone2_alarm_delay_time = 90;
 
+uint8_t targe_delay_flag = 0;
+uint32_t targe_delay_time = 500;	//触发延时
+uint32_t targe_delay_time_cnt = 0;
+
 alarm_sta_typedef zone1_alarm_sta = NORMAL_STA;
 alarm_sta_typedef zone2_alarm_sta = NORMAL_STA;
 
@@ -321,16 +325,24 @@ void broken_detect(uint8_t zone_num)
 				{
 					if(zone1_short_mask)
 					{
-						zone1_alarm_sta = BROKEN_STA;
+						zone1_alarm_sta = PN_BROKEN_STA;			//正线负线全断线
 					}
 					else
 					{
 						zone1_alarm_sta = SHORT_STA;
 					}
 				}
-				else
+				else if((!(broken_short_a1_line_cnt * broken_short_a2_line_cnt)) && (!(broken_short_a3_line_cnt * broken_short_a4_line_cnt)))
 				{
-					zone1_alarm_sta = BROKEN_STA;
+					zone1_alarm_sta = PN_BROKEN_STA;			//正线负线全断线
+				}
+				else if(!(broken_short_a1_line_cnt * broken_short_a2_line_cnt))	//负线断线
+				{
+					zone1_alarm_sta = N_BROKEN_STA;
+				}
+				else if(!(broken_short_a3_line_cnt * broken_short_a4_line_cnt))	//正线断线
+				{
+					zone1_alarm_sta = P_BROKEN_STA;
 				}
 			}
 			else if((zone1_alarm_sta != TOUCH_NET_STA) && (zone1_alarm_sta != BYPASS_STA))
@@ -340,7 +352,12 @@ void broken_detect(uint8_t zone_num)
 			broken_short_a1_line_cnt = 0;
 			broken_short_a2_line_cnt = 0;
 			broken_short_a3_line_cnt = 0;
-			broken_short_a4_line_cnt = 0;
+			broken_short_a4_line_cnt = 0;		//把防区2也清掉为了防止防区二释放脉冲时对防区2断线检测中断有干扰到
+			
+			broken_short_b1_line_cnt = 0;
+			broken_short_b2_line_cnt = 0;
+			broken_short_b3_line_cnt = 0;
+			broken_short_b4_line_cnt = 0;
 	}
 	else if(zone_num == ZONE2)
 	{
@@ -367,23 +384,35 @@ void broken_detect(uint8_t zone_num)
 				{
 					if(zone2_short_mask)
 					{
-						zone2_alarm_sta = BROKEN_STA;
+						zone2_alarm_sta = PN_BROKEN_STA;		//正线负线全断线
 					}
 					else
 					{
 						zone2_alarm_sta = SHORT_STA;
 					}
 				}
-				else
+				else if((!(broken_short_b1_line_cnt * broken_short_b2_line_cnt)) && (!(broken_short_b3_line_cnt * broken_short_b4_line_cnt)))
 				{
-					zone2_alarm_sta = BROKEN_STA;
+					zone2_alarm_sta = PN_BROKEN_STA;		//正线负线全断线
+				}
+				else if(!(broken_short_b1_line_cnt * broken_short_b2_line_cnt))	//正线断线
+				{
+					zone2_alarm_sta = N_BROKEN_STA;
+				}
+				else if(!(broken_short_b3_line_cnt * broken_short_b4_line_cnt))	//负线断线
+				{
+					zone2_alarm_sta = P_BROKEN_STA;
 				}
 			}
 			else if(zone2_alarm_sta != TOUCH_NET_STA)
 			{
 				zone2_alarm_sta = NORMAL_STA;
 			}
-			
+
+			broken_short_a1_line_cnt = 0;
+			broken_short_a2_line_cnt = 0;
+			broken_short_a3_line_cnt = 0;
+			broken_short_a4_line_cnt = 0;	//把防区1也清掉为了防止防区二释放脉冲时对防区1断线检测中断有干扰到
 			broken_short_b1_line_cnt = 0;
 			broken_short_b2_line_cnt = 0;
 			broken_short_b3_line_cnt = 0;
@@ -394,6 +423,11 @@ void broken_detect(uint8_t zone_num)
 /*防区状态查询 */
 void alarm_inquire(void)
 {
+	if(targe_delay_flag)
+	{
+		return;
+	}
+	
 	if(zone1_alarm_delay_finish_mask)
 	{
 		zone1_alarm_delay_finish_mask = 0;
@@ -520,14 +554,14 @@ void touch_net_dectec(uint8_t zone_num)
 	
 	if(protection_level == HIGH_VOLTAGE_MODE)
 	{
-		zone1_max_normal_voltage = zone1_high_max_normal_voltage;
-		zone1_min_normal_voltage = zone1_high_min_normal_voltage;
+		zone1_max_normal_voltage = zone1_high_max_normal_voltage + 0.02;
+		zone1_min_normal_voltage = zone1_high_min_normal_voltage - 0.02;
 	
 		zone2_max_normal_voltage = zone2_high_max_normal_voltage + 0.02;
 		zone2_min_normal_voltage = zone2_high_min_normal_voltage - 0.02;
 		
-		zone1_short_voltage = 0.08;
-		zone2_short_voltage = 0.08;
+		zone1_short_voltage = 0.05;
+		zone2_short_voltage = 0.05;
 	}
 	else if(protection_level == LOW_VOLTAGE_MODE)
 	{
@@ -537,8 +571,8 @@ void touch_net_dectec(uint8_t zone_num)
 		zone2_max_normal_voltage = zone2_low_max_normal_voltage;
 		zone2_min_normal_voltage = zone2_low_min_normal_voltage;		
 		
-		zone1_short_voltage = 0.04;
-		zone2_short_voltage = 0.04;
+		zone1_short_voltage = 0.05;
+		zone2_short_voltage = 0.05;
 	}
 	
 	voltage = get_max_voltage(zone_num);
@@ -590,6 +624,7 @@ void touch_net_dectec(uint8_t zone_num)
 			{	
 				zone1_touch_net_cnt = 0;
 				zone1_alarm_sta = TOUCH_NET_STA;
+				zone1_short_mask = 1;
 			}
 		}
 		else if((voltage > zone1_min_normal_voltage) && (voltage < zone1_max_normal_voltage))
@@ -598,7 +633,7 @@ void touch_net_dectec(uint8_t zone_num)
 			zone1_alarm_sta = NORMAL_STA;	
 			zone1_touch_net_cnt = 0;
 		}
-		else
+		else if(voltage < zone1_short_voltage)
 		{
 			zone1_short_mask = 0;
 			zone1_alarm_sta = NORMAL_STA;
@@ -650,6 +685,7 @@ void touch_net_dectec(uint8_t zone_num)
 		{
 			if(++zone2_touch_net_cnt >= zone2_trigger_quantity)
 			{	
+				zone2_short_mask = 1;
 				zone2_touch_net_cnt = 0;
 				zone2_alarm_sta = TOUCH_NET_STA;
 			}
@@ -660,7 +696,7 @@ void touch_net_dectec(uint8_t zone_num)
 			zone2_alarm_sta = NORMAL_STA;	
 			zone2_touch_net_cnt = 0;
 		}
-		else
+		else if(voltage < zone2_short_voltage)
 		{
 			zone2_short_mask = 0;
 			zone2_alarm_sta = NORMAL_STA;

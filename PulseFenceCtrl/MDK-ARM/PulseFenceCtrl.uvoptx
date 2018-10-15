@@ -153,24 +153,7 @@
           <Name>UL2CM3(-S0 -O2254 -P0 )  -FN1 -FC1000 -FD20000000 -FF0STM32F10x_128 -FL020000 -FS08000000 -FP0($$Device:STM32F103C8$Flash\STM32F10x_128.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>592</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134233966</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>E:\鍛ㄧ晫鎶ヨ\绋嬪簭\PulseFenceControl\PulseFenceCtrl\Bsp\boost.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\PulseFenceCtrl\../Bsp/boost.c\592</Expression>
-        </Bp>
-      </Breakpoint>
+      <Breakpoint/>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -291,6 +274,21 @@
           <count>23</count>
           <WinNumber>1</WinNumber>
           <ItemText>zone2_low_min_normal_voltage</ItemText>
+        </Ww>
+        <Ww>
+          <count>24</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>targe_delay_flag</ItemText>
+        </Ww>
+        <Ww>
+          <count>25</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>targe_delay_time</ItemText>
+        </Ww>
+        <Ww>
+          <count>26</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>targe_delay_time_cnt</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
