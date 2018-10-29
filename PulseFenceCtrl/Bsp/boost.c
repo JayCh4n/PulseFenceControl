@@ -38,7 +38,7 @@ uint16_t zone1_alarm_delay_time = 90;		// 根据灵敏度计算得出延时报警值  * 10ms  
 uint16_t zone2_alarm_delay_time = 90;
 
 uint8_t targe_delay_flag = 0;
-uint32_t targe_delay_time = 500;	//触发延时
+uint32_t targe_delay_time = 500;	//触发延时单位10ms  最大设定99秒
 uint32_t targe_delay_time_cnt = 0;
 
 alarm_sta_typedef zone1_alarm_sta = NORMAL_STA;
@@ -627,17 +627,23 @@ void touch_net_dectec(uint8_t zone_num)
 				zone1_short_mask = 1;
 			}
 		}
-		else if((voltage > zone1_min_normal_voltage) && (voltage < zone1_max_normal_voltage))
-		{
-			zone1_short_mask = 1;
-			zone1_alarm_sta = NORMAL_STA;	
-			zone1_touch_net_cnt = 0;
-		}
+//		else if((voltage > zone1_min_normal_voltage) && (voltage < zone1_max_normal_voltage))
+//		{
+//			zone1_short_mask = 1;
+//			zone1_alarm_sta = NORMAL_STA;
+//			zone1_touch_net_cnt = 0;
+//		}
 		else if(voltage < zone1_short_voltage)
 		{
 			zone1_short_mask = 0;
 			zone1_alarm_sta = NORMAL_STA;
 			zone1_touch_net_cnt = 0;
+		}
+		else
+		{
+			zone1_short_mask = 1;
+			zone1_alarm_sta = NORMAL_STA;
+			zone1_touch_net_cnt = 0;		
 		}
 	}
 	else if(zone_num == ZONE2)
@@ -690,18 +696,24 @@ void touch_net_dectec(uint8_t zone_num)
 				zone2_alarm_sta = TOUCH_NET_STA;
 			}
 		}
-		else if((voltage > zone2_min_normal_voltage) && (voltage < zone2_max_normal_voltage))
-		{
-			zone2_short_mask = 1;
-			zone2_alarm_sta = NORMAL_STA;	
-			zone2_touch_net_cnt = 0;
-		}
+//		else if((voltage > zone2_min_normal_voltage) && (voltage < zone2_max_normal_voltage))
+//		{
+//			zone2_short_mask = 1;
+//			zone2_alarm_sta = NORMAL_STA;	
+//			zone2_touch_net_cnt = 0;
+//		}
 		else if(voltage < zone2_short_voltage)
 		{
 			zone2_short_mask = 0;
 			zone2_alarm_sta = NORMAL_STA;
 			zone2_touch_net_cnt = 0;
-		}		
+		}
+		else
+		{
+			zone2_short_mask = 1;
+			zone2_alarm_sta = NORMAL_STA;	
+			zone2_touch_net_cnt = 0;
+		}
 	}
 	view_voltage = voltage;
 }

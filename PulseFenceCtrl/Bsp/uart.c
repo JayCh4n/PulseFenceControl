@@ -38,7 +38,7 @@ void uart1_deal(uint8_t *data_package)
 			break;
 		case AUTO_DETECT: auto_detect_sta = 1; send_sta_msg(AUTO_DETECT, data_package[4]);
 			break;
-		case TARGE_DELAY: targe_delay_time = data_package[4] * 100;
+		case TARGE_DELAY: targe_delay_time = data_package[4] * 100; send_sta_msg(TARGE_DELAY, data_package[4]);
 			break;
 		
 		default: break;

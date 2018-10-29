@@ -233,62 +233,32 @@
         <Ww>
           <count>15</count>
           <WinNumber>1</WinNumber>
-          <ItemText>zone1_high_voltage_filter_finish</ItemText>
+          <ItemText>touch_net_mode</ItemText>
         </Ww>
         <Ww>
           <count>16</count>
           <WinNumber>1</WinNumber>
-          <ItemText>zone1_fliter_finish</ItemText>
+          <ItemText>zone2_high_max_normal_voltage</ItemText>
         </Ww>
         <Ww>
           <count>17</count>
           <WinNumber>1</WinNumber>
-          <ItemText>touch_net_mode</ItemText>
+          <ItemText>zone2_high_min_normal_voltage</ItemText>
         </Ww>
         <Ww>
           <count>18</count>
           <WinNumber>1</WinNumber>
-          <ItemText>zone2_fliter_finish</ItemText>
+          <ItemText>protection_level</ItemText>
         </Ww>
         <Ww>
           <count>19</count>
           <WinNumber>1</WinNumber>
-          <ItemText>zone2_high_max_normal_voltage</ItemText>
+          <ItemText>zone2_alarm_sta</ItemText>
         </Ww>
         <Ww>
           <count>20</count>
           <WinNumber>1</WinNumber>
-          <ItemText>zone2_high_min_normal_voltage</ItemText>
-        </Ww>
-        <Ww>
-          <count>21</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>protection_level</ItemText>
-        </Ww>
-        <Ww>
-          <count>22</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>zone2_low_max_normal_voltage</ItemText>
-        </Ww>
-        <Ww>
-          <count>23</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>zone2_low_min_normal_voltage</ItemText>
-        </Ww>
-        <Ww>
-          <count>24</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>targe_delay_flag</ItemText>
-        </Ww>
-        <Ww>
-          <count>25</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>targe_delay_time</ItemText>
-        </Ww>
-        <Ww>
-          <count>26</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>targe_delay_time_cnt</ItemText>
+          <ItemText>zone2_fliter_finish</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
