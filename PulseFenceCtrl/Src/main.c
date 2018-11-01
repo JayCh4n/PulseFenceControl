@@ -87,7 +87,6 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	static uint8_t cycle_cnt = 0;
 	
   /* USER CODE END 1 */
 
@@ -135,29 +134,11 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-		if(arming_sta)
-		{
-			boost_release();
-			alarm_inquire();
-		}
-	
-		if(auto_detect_sta)
-		{
-			auto_dectect();
-		}
-		
-		if(++cycle_cnt >= 5)
-		{
-			cycle_cnt = 0;
-			if(write_flash_flag)
-			{
-				write_flash_flag = 0;
-				STMFLASH_Write(PAGE_ADDR, (uint16_t *)&flash_data_struct, FLASH_DATA_SIZE);
-			}
-		}
+		boost_release();		//ÉýÑ¹²¢ÊÍ·ÅÂö³å
+		auto_dectect();			//×Ô¼ì
+		write_flash_process();
   }
   /* USER CODE END 3 */
-
 }
 
 /**
@@ -416,7 +397,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == htim1.Instance)
 	{
-		if(arming_sta)
+		if(zone1_arming_sta || zone2_arming_sta)
 		{
 			if(++boost_delay_cnt >= 150)
 			{
@@ -432,40 +413,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 					release_pulse_finish_mask = 1;
 				}
 			}
-			
-//			if(++broken_short_detect_time_cnt >= 200)
-//			{
-//				broken_short_detect_time_cnt = 0;
-//				
-//				broken_detect(ZONE1);
-//				
-//				if(zone_mode == DOUBLE_ZONE)
-//				{
-//					broken_detect(ZONE2);
-//				}
-//			}
-			
-			if(++zone1_alarm_delay_cnt >= zone1_alarm_delay_time)
-			{
-				zone1_alarm_delay_cnt = 0;
-				zone1_alarm_delay_finish_mask = 1; 
-			}
-			
-			if(zone_mode == DOUBLE_ZONE)
-			{
-				if(++zone2_alarm_delay_cnt >= zone2_alarm_delay_time)
-				{
-					zone2_alarm_delay_cnt = 0;
-					zone2_alarm_delay_finish_mask = 1; 
-				}			
-			}
-			
-			if(++targe_delay_time_cnt >= targe_delay_time)
-			{
-				targe_delay_time_cnt = 0;
-				targe_delay_flag = 0;
-			}
-			
 		}
 	}
 }
@@ -551,7 +498,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		
 		default: break;
 	}
-	
 }
 
 /* USER CODE END 4 */

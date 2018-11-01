@@ -235,6 +235,20 @@ void STMFLASH_Read(uint32_t ReadAddr,uint16_t *pBuffer,uint16_t NumToRead)
 	}
 }
 
+void write_flash_process(void)
+{
+	static uint8_t cycle_cnt = 0;
+	
+	if(write_flash_flag)
+	{
+		if(++cycle_cnt >= 5)
+		{
+			cycle_cnt = 0;
+			write_flash_flag = 0;
+			STMFLASH_Write(PAGE_ADDR, (uint16_t *)&flash_data_struct, FLASH_DATA_SIZE);
+		}
+	}
+}
 
 
 

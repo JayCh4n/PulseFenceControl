@@ -8,53 +8,84 @@ uint8_t uart1_rx_buff;
 
 void uart1_deal(uint8_t *data_package)
 {
-//	uint8_t package_lenth;
-	uint8_t command;
-	
-//	package_lenth = data_package[2] + 5;
+	uint8_t command, zone_num, data;
 	command = data_package[3];
+	zone_num = data_package[4];
+	data = data_package[5];
 	
 	switch(command)
 	{
 		case AMING_DISARM: 
-			arming_disarm(data_package[4]);
-			zone1_touch_net_cnt = 0;
-			zone2_touch_net_cnt = 0;
-			targe_delay_flag = 1;
-			targe_delay_time_cnt = 0;
-			send_sta_msg(AMING_DISARM, data_package[4]);		
+			arming_disarm(zone_num, data);
+			return_set_msg(AMING_DISARM, zone_num, data);
 			break;
-		case SINGLE_DOUBLE_ZONE: zone_mode = data_package[4];	send_sta_msg(SINGLE_DOUBLE_ZONE, data_package[4]);
+		case ZONE_TYPE: zone_type = data;
+			return_set_msg(ZONE_TYPE, zone_num, data);
 			break;
 		case HIGH_LOW_VOLTAGE:
-			protection_level = data_package[4];
-			send_sta_msg(HIGH_LOW_VOLTAGE, data_package[4]);
+			set_protection_level(zone_num, data);
+			return_set_msg(HIGH_LOW_VOLTAGE, zone_num, data);
 			break;
-		case ZONE1_SENSITIVITY: set_sensitivity(ZONE1, data_package[4]); send_sta_msg(ZONE1_SENSITIVITY, data_package[4]); 
+		case SENSITIVITY: set_sensitivity(zone_num, data); return_set_msg(SENSITIVITY, zone_num, data);
 			break;
-		case ZONE2_SENSITIVITY: set_sensitivity(ZONE2, data_package[4]); send_sta_msg(ZONE2_SENSITIVITY, data_package[4]);
+		case ZONE_MODE:
+			set_zone_mode(zone_num, data);
+			return_set_msg(ZONE_MODE, zone_num, data);
 			break;
-		case TOUCH_NET:	touch_net_mode = data_package[4]; send_sta_msg(TOUCH_NET, data_package[4]);
+		case AUTO_DETECT: auto_detect_sta = 1; return_set_msg(AUTO_DETECT, zone_num, data);
 			break;
-		case AUTO_DETECT: auto_detect_sta = 1; send_sta_msg(AUTO_DETECT, data_package[4]);
+		case TARGE_DELAY:
 			break;
-		case TARGE_DELAY: targe_delay_time = data_package[4] * 100; send_sta_msg(TARGE_DELAY, data_package[4]);
-			break;
-		
+		case 0x20:
+			get_init_value(data_package);
+		break;
+		case 0x30:return_sta_msg(); break;
 		default: break;
 	}
 }
 
-/*zone_sta: 0x11 防区1状态  0x12 防区2状态*/
-void send_sta_msg(uint8_t sta_type, uint8_t sta)
+void return_set_msg(uint8_t cmd, uint8_t zone_num, uint8_t sta)
 {
 	uart1_tx_data[0] = 0xA5;
 	uart1_tx_data[1] = 0x5A;
-	uart1_tx_data[2] = 0x02;
-	uart1_tx_data[3] = sta_type;
-	uart1_tx_data[4] = sta;
-	uart1_tx_data[5] = 0x00;
-	uart1_tx_data[6] = 0x00;		/*校验位暂时不加*/
-	HAL_UART_Transmit_IT(&huart1, uart1_tx_data, 7);
+	uart1_tx_data[2] = 0x03;
+	uart1_tx_data[3] = cmd;
+	uart1_tx_data[4] = zone_num;
+	uart1_tx_data[5] = sta;
+	uart1_tx_data[6] = 0x00;
+	uart1_tx_data[7] = 0x00;
+	HAL_UART_Transmit(&huart1, uart1_tx_data, 8, 1000);
 }
+
+
+void get_init_value(uint8_t *data_package)
+{
+	zone_type = data_package[4];
+	zone1_protection_level = data_package[5];
+	zone2_protection_level = data_package[6];
+	zone1_sensitivity = data_package[7];
+	zone2_sensitivity = data_package[8];
+	zone1_mode = data_package[9];
+	zone2_mode = data_package[10];
+}
+
+void return_sta_msg(void)
+{
+	uart1_tx_data[0] = 0xA5;
+	uart1_tx_data[1] = 0x5A;
+	uart1_tx_data[2] = 0x03;
+	uart1_tx_data[3] = 0x30;
+	uart1_tx_data[4] = (uint8_t)zone1_alarm_sta;
+	uart1_tx_data[5] = (uint8_t)zone2_alarm_sta;
+	uart1_tx_data[6] = 0x00;
+	uart1_tx_data[7] = 0x00;	
+	
+	HAL_UART_Transmit(&huart1, uart1_tx_data, 8, 1000);
+}
+
+
+
+
+
+
 

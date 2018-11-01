@@ -13,8 +13,10 @@
 
 #define BOOST_IN_START			1			//ÕýÔÚÉýÑ¹×´Ì¬
 #define BOOST_IN_STOP				0			//Í£Ö¹ÉýÑ¹×´Ì¬
-#define ZONE1								1
+
+#define ZONE1								1			
 #define ZONE2								2
+#define ZONE_ALL						0xFF
 
 #define MAX_FILTER_QUANTITY			8
 
@@ -29,26 +31,22 @@ typedef enum
 	BYPASS_STA
 }alarm_sta_typedef;
 
-extern uint8_t arming_sta;
-extern uint8_t zone_mode;
-extern uint8_t protection_level;
-extern uint8_t touch_net_mode;
+extern uint8_t zone1_arming_sta;
+extern uint8_t zone2_arming_sta;
+extern uint8_t zone_type;
+extern uint8_t zone1_protection_level;
+extern uint8_t zone2_protection_level;
+extern uint8_t zone1_sensitivity;
+extern uint8_t zone2_sensitivity;
+extern uint8_t zone1_mode;  				//0:Âö³åÄ£Ê½(²»¼ì²â´¥Íø)   1:´¥ÍøÄ£Ê½
+extern uint8_t zone2_mode;
 
 extern uint8_t boost_delay_cnt;
 extern uint8_t release_pulse_time_cnt;
-extern uint16_t zone1_alarm_delay_cnt;
-extern uint16_t zone2_alarm_delay_cnt;
-//extern uint8_t broken_short_detect_time_cnt;
-
-extern uint8_t targe_delay_flag;
-extern uint32_t targe_delay_time;	//´¥·¢ÑÓÊ±
-extern uint32_t targe_delay_time_cnt;
 
 extern uint8_t boost_finish_flag;
 extern uint8_t boost_delay_finish_mask;
 extern uint8_t release_pulse_finish_mask;
-extern uint8_t zone1_alarm_delay_finish_mask;
-extern uint8_t zone2_alarm_delay_finish_mask;
 
 extern uint16_t broken_short_a1_line_cnt;
 extern uint16_t broken_short_a2_line_cnt;
@@ -61,6 +59,9 @@ extern uint16_t broken_short_b4_line_cnt;
 
 extern uint8_t zone1_touch_net_cnt;	//´¥Íø¼ÆÊý
 extern uint8_t zone2_touch_net_cnt;	//´¥Íø¼ÆÊý
+
+extern alarm_sta_typedef zone1_alarm_sta;
+extern alarm_sta_typedef zone2_alarm_sta;
 
 extern uint16_t zone1_alarm_delay_time;
 extern uint16_t zone2_alarm_delay_time;
@@ -84,8 +85,10 @@ void stop_primary_boost(void);
 void primary_boost(uint8_t level);
 void ralease_pulse(uint8_t zone_num);
 void boost_release(void);
-void arming_disarm(uint8_t sta);
+void arming_disarm(uint8_t zone_num, uint8_t sta);
+void set_protection_level(uint8_t zone_num, uint8_t level);
 void set_sensitivity(uint8_t zone_num, uint8_t level);
+void set_zone_mode(uint8_t zone_num, uint8_t mode);
 void broken_detect(uint8_t zone_num);
 void alarm_inquire(void);
 void touch_net_dectec(uint8_t zone_num);
