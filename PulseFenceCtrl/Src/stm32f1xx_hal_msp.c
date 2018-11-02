@@ -53,6 +53,7 @@ void HAL_MspInit(void)
   /* USER CODE END MspInit 0 */
 
   __HAL_RCC_AFIO_CLK_ENABLE();
+  __HAL_RCC_PWR_CLK_ENABLE();
 
   HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
@@ -94,11 +95,14 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
     __HAL_RCC_ADC1_CLK_ENABLE();
   
     /**ADC1 GPIO Configuration    
+    PA2     ------> ADC1_IN2
+    PA3     ------> ADC1_IN3
     PA4     ------> ADC1_IN4
     PA5     ------> ADC1_IN5
     PA6     ------> ADC1_IN6 
     */
-    GPIO_InitStruct.Pin = VREF1_2_Pin|DETECT_ZONE1_TOUCH_Pin|DETECT_ZONE2_TOUCH_Pin;
+    GPIO_InitStruct.Pin = DETECT_LEVEL_HIGH_ADC_Pin|DETECT_LEVEL_LOW_ADC_Pin|VREF1_2_Pin|DETECT_ZONE1_TOUCH_Pin 
+                          |DETECT_ZONE2_TOUCH_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -121,11 +125,14 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
     __HAL_RCC_ADC1_CLK_DISABLE();
   
     /**ADC1 GPIO Configuration    
+    PA2     ------> ADC1_IN2
+    PA3     ------> ADC1_IN3
     PA4     ------> ADC1_IN4
     PA5     ------> ADC1_IN5
     PA6     ------> ADC1_IN6 
     */
-    HAL_GPIO_DeInit(GPIOA, VREF1_2_Pin|DETECT_ZONE1_TOUCH_Pin|DETECT_ZONE2_TOUCH_Pin);
+    HAL_GPIO_DeInit(GPIOA, DETECT_LEVEL_HIGH_ADC_Pin|DETECT_LEVEL_LOW_ADC_Pin|VREF1_2_Pin|DETECT_ZONE1_TOUCH_Pin 
+                          |DETECT_ZONE2_TOUCH_Pin);
 
   /* USER CODE BEGIN ADC1_MspDeInit 1 */
 

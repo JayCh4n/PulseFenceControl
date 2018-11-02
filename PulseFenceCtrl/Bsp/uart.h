@@ -13,7 +13,7 @@
 //#define ZONE2_SENSITIVITY		0x05		//防区2灵敏度命令			数据：0x01 - 0x03	对应1——3等级灵敏度
 #define ZONE_MODE						0x05			//防区模式						数据:	0x00 脉冲   0x01触网
 #define AUTO_DETECT					0x06			//自动检测命令				数据: 0x01 ：开始自动检测（接收）	0x02:自动检测完成（发送）
-#define TARGE_DELAY					0x07			//触发延时时间				数据:	时间    单位：秒
+#define POWER_USE_STA					0x07			//触发延时时间				数据:	时间    单位：秒
 
 #define PULSE_MODE			0
 #define TOUCH_NET_MODE 	1

@@ -4,7 +4,7 @@ extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim1;
 extern ADC_HandleTypeDef hadc1;
 
-uint8_t flag = 0;
+uint8_t flag = 0;		//测试数据 可删除
 /* 默认：撤防 双防区 高压模式 */
 uint8_t zone1_arming_sta = 0;							//防区1布防状态 1：布防 0：撤防
 uint8_t zone2_arming_sta = 0;							//防区2布防状态 1：布防 0：撤防
@@ -74,6 +74,9 @@ uint8_t zone1_high_voltage_detect_cnt = 0;
 uint8_t zone1_low_voltage_detect_cnt = 0;
 uint8_t zone2_high_voltage_detect_cnt = 0;
 uint8_t zone2_low_voltage_detect_cnt = 0;
+
+uint8_t power_use_sta = USE_AC_POWER;
+uint8_t pre_power_use_sta = USE_AC_POWER;
 
 /*从小到大排序*/
 void sort_float(float *data, uint16_t data_size)
@@ -149,6 +152,20 @@ void stop_primary_boost(void)
 void primary_boost(uint8_t level)
 {
 	uint64_t i = 0;
+	
+	if(power_use_sta != pre_power_use_sta)
+	{
+		pre_power_use_sta = power_use_sta;
+		if(power_use_sta == USE_AC_POWER)
+		{
+			configure_boost_pwm_duty_cycle(20);
+		}
+		else if(power_use_sta == USE_BATTERY_POWER)
+		{
+			configure_boost_pwm_duty_cycle(28);
+		}
+	}
+	
 	start_primary_boost();	/*开始前级升压 */
 	
 	/*根据升压等级 等待升到设定等级对应电压*/
@@ -221,7 +238,6 @@ void ralease_pulse(uint8_t zone_num)
 	{
 		HAL_GPIO_WritePin(ZONE2_PULSE_RELEASE_PIN_GPIO_Port, ZONE2_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);	
 	}
-	
 }
 
 /*升压并且释放脉冲*/
@@ -382,6 +398,20 @@ void set_zone_mode(uint8_t zone_num, uint8_t mode)
 		else
 			zone1_mode = mode;
 	}
+}
+
+void configure_boost_pwm_duty_cycle(uint8_t duty_cycle)
+{
+		TIM_OC_InitTypeDef sConfigOC;
+	
+		sConfigOC.OCMode = TIM_OCMODE_PWM1;
+		sConfigOC.Pulse = duty_cycle;
+		sConfigOC.OCPolarity = TIM_OCPOLARITY_LOW;
+		sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+		if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+		{
+			_Error_Handler(__FILE__, __LINE__);
+		}
 }
 
 /*断线、短路检测*/
@@ -577,6 +607,9 @@ void insert(float *array, float data, uint16_t data_size)
 	array[0] = data;
 }
 
+float zone1_voltage = 0.0f;
+float zone2_voltage = 0.0f;
+
 void touch_net_dectec(uint8_t zone_num)
 {
 	float voltage;
@@ -611,38 +644,39 @@ void touch_net_dectec(uint8_t zone_num)
 	
 	if(zone1_protection_level == HIGH_VOLTAGE_MODE)
 	{
-		zone1_max_normal_voltage = zone1_high_max_normal_voltage + 0.02;
-		zone1_min_normal_voltage = zone1_high_min_normal_voltage - 0.02;
+		zone1_max_normal_voltage = zone1_high_max_normal_voltage + 0.04;
+		zone1_min_normal_voltage = zone1_high_min_normal_voltage - 0.04;
 		
-		zone1_short_voltage = 0.05;
+		zone1_short_voltage = 0.02;
 	}
 	else if(zone1_protection_level == LOW_VOLTAGE_MODE)
 	{
-		zone1_max_normal_voltage = zone1_low_max_normal_voltage;
-		zone1_min_normal_voltage = zone1_low_min_normal_voltage;
+		zone1_max_normal_voltage = zone1_low_max_normal_voltage + 0.02;
+		zone1_min_normal_voltage = zone1_low_min_normal_voltage - 0.02;
 
-		zone1_short_voltage = 0.05;
+		zone1_short_voltage = 0.002;
 	}
 	
 	if(zone2_protection_level == HIGH_VOLTAGE_MODE)
 	{
-		zone2_max_normal_voltage = zone2_high_max_normal_voltage + 0.02;
-		zone2_min_normal_voltage = zone2_high_min_normal_voltage - 0.02;
+		zone2_max_normal_voltage = zone2_high_max_normal_voltage + 0.04;
+		zone2_min_normal_voltage = zone2_high_min_normal_voltage - 0.04;
 		
-		zone2_short_voltage = 0.05;
+		zone2_short_voltage = 0.02;
 	}
 	else if(zone2_protection_level == LOW_VOLTAGE_MODE)
 	{
-		zone2_max_normal_voltage = zone2_low_max_normal_voltage;
-		zone2_min_normal_voltage = zone2_low_min_normal_voltage;
+		zone2_max_normal_voltage = zone2_low_max_normal_voltage + 0.02;
+		zone2_min_normal_voltage = zone2_low_min_normal_voltage - 0.02;
 		
-		zone2_short_voltage = 0.05;
+		zone2_short_voltage = 0.002;
 	}
 	
 	voltage = get_max_voltage(zone_num);
 	
 	if(zone_num == ZONE1)
 	{
+		zone1_voltage = voltage;
 		if(zone1_protection_level == HIGH_VOLTAGE_MODE)
 		{
 			insert(zone1_high_voltage_buff, voltage, zone1_filter_quantity);
@@ -712,6 +746,7 @@ void touch_net_dectec(uint8_t zone_num)
 	}
 	else if(zone_num == ZONE2)
 	{
+		zone2_voltage = voltage;
 		if(zone2_protection_level == HIGH_VOLTAGE_MODE)
 		{
 			insert(zone2_high_voltage_buff, voltage, zone2_filter_quantity);
@@ -803,9 +838,17 @@ void auto_dectect(void)
 		zone1_high_normal_voltage[i] = get_max_voltage(ZONE1);
 		HAL_Delay(20);
 		HAL_GPIO_WritePin(ZONE1_PULSE_RELEASE_PIN_GPIO_Port, ZONE1_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);
-		HAL_Delay(300);
+//		HAL_Delay(1200);
+		
+		primary_boost(HIGH_VOLTAGE_MODE);
+		HAL_GPIO_WritePin(ZONE2_PULSE_RELEASE_PIN_GPIO_Port, ZONE2_PULSE_RELEASE_PIN_Pin, GPIO_PIN_RESET);
+		HAL_Delay(1);
+		zone2_high_normal_voltage[i] = get_max_voltage(ZONE2);
+		HAL_Delay(20);
+		HAL_GPIO_WritePin(ZONE2_PULSE_RELEASE_PIN_GPIO_Port, ZONE2_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);
+		HAL_Delay(1200);
 	}
-
+	
 	for(i=0; i<50; i++)
 	{
 		primary_boost(LOW_VOLTAGE_MODE);
@@ -814,29 +857,25 @@ void auto_dectect(void)
 		zone1_low_normal_voltage[i] = get_max_voltage(ZONE1);
 		HAL_Delay(20);
 		HAL_GPIO_WritePin(ZONE1_PULSE_RELEASE_PIN_GPIO_Port, ZONE1_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);
-		HAL_Delay(300);
-	}
-	
-	for(i=0; i<50; i++)
-	{
-		primary_boost(HIGH_VOLTAGE_MODE);
-		HAL_GPIO_WritePin(ZONE2_PULSE_RELEASE_PIN_GPIO_Port, ZONE2_PULSE_RELEASE_PIN_Pin, GPIO_PIN_RESET);
-		HAL_Delay(1);
-		zone2_high_normal_voltage[i] = get_max_voltage(ZONE2);
-		HAL_Delay(20);
-		HAL_GPIO_WritePin(ZONE2_PULSE_RELEASE_PIN_GPIO_Port, ZONE2_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);
-		HAL_Delay(300);
-	}
-	
-	for(i=0; i<50; i++)
-	{
+//		HAL_Delay(300);
+		
 		primary_boost(LOW_VOLTAGE_MODE);
 		HAL_GPIO_WritePin(ZONE2_PULSE_RELEASE_PIN_GPIO_Port, ZONE2_PULSE_RELEASE_PIN_Pin, GPIO_PIN_RESET);
 		HAL_Delay(1);
 		zone2_low_normal_voltage[i] = get_max_voltage(ZONE2);
 		HAL_Delay(20);
 		HAL_GPIO_WritePin(ZONE2_PULSE_RELEASE_PIN_GPIO_Port, ZONE2_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);
-		HAL_Delay(300);
+		HAL_Delay(1200);
+	}
+	
+	for(i=0; i<50; i++)
+	{
+
+	}
+	
+	for(i=0; i<50; i++)
+	{
+
 	}
 	
 	get_extreme_value(&zone1_high_max_normal_voltage,&zone1_high_min_normal_voltage, zone1_high_normal_voltage, 50);
@@ -857,7 +896,6 @@ void auto_dectect(void)
 	auto_detect_sta = 0;
 	return_set_msg(AUTO_DETECT, 0xFF, 0x02);
 }
-
 
 
 

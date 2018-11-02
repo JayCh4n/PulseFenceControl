@@ -139,6 +139,7 @@ int main(void)
 		write_flash_process();
   }
   /* USER CODE END 3 */
+
 }
 
 /**
@@ -359,21 +360,17 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, ZONE1_PULSE_RELEASE_PIN_Pin|ZONE2_PULSE_RELEASE_PIN_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : PRIMARY_BOOST_ENABLE_PIN_Pin ZONE1_PULSE_RELEASE_PIN_Pin ZONE2_PULSE_RELEASE_PIN_Pin */
-  GPIO_InitStruct.Pin = PRIMARY_BOOST_ENABLE_PIN_Pin|ZONE1_PULSE_RELEASE_PIN_Pin|ZONE2_PULSE_RELEASE_PIN_Pin;
+  /*Configure GPIO pin : PRIMARY_BOOST_ENABLE_PIN_Pin */
+  GPIO_InitStruct.Pin = PRIMARY_BOOST_ENABLE_PIN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(PRIMARY_BOOST_ENABLE_PIN_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : DETECT_LEVEL_HIGH_Pin DETECT_LEVEL_LOW_Pin */
   GPIO_InitStruct.Pin = DETECT_LEVEL_HIGH_Pin|DETECT_LEVEL_LOW_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  GPIO_InitStruct.Pin = GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : DETECT_A3_LINE_PIN_Pin DETECT_A4_LINE_PIN_Pin DETECT_B1_LINE_PIN_Pin DETECT_B2_LINE_PIN_Pin 
@@ -383,6 +380,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : ZONE1_PULSE_RELEASE_PIN_Pin ZONE2_PULSE_RELEASE_PIN_Pin */
+  GPIO_InitStruct.Pin = ZONE1_PULSE_RELEASE_PIN_Pin|ZONE2_PULSE_RELEASE_PIN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 }
 

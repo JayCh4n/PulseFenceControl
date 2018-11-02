@@ -18,6 +18,9 @@
 #define ZONE2								2
 #define ZONE_ALL						0xFF
 
+#define USE_AC_POWER				1
+#define USE_BATTERY_POWER		0
+
 #define MAX_FILTER_QUANTITY			8
 
 typedef enum
@@ -80,6 +83,9 @@ extern float zone2_low_min_normal_voltage;
 
 extern uint8_t auto_detect_sta;
 
+extern uint8_t power_use_sta;
+extern uint8_t pre_power_use_sta;
+
 void start_primary_boost(void);
 void stop_primary_boost(void);
 void primary_boost(uint8_t level);
@@ -89,6 +95,7 @@ void arming_disarm(uint8_t zone_num, uint8_t sta);
 void set_protection_level(uint8_t zone_num, uint8_t level);
 void set_sensitivity(uint8_t zone_num, uint8_t level);
 void set_zone_mode(uint8_t zone_num, uint8_t mode);
+void configure_boost_pwm_duty_cycle(uint8_t duty_cycle);
 void broken_detect(uint8_t zone_num);
 void alarm_inquire(void);
 void touch_net_dectec(uint8_t zone_num);

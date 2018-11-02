@@ -34,12 +34,14 @@ void uart1_deal(uint8_t *data_package)
 			break;
 		case AUTO_DETECT: auto_detect_sta = 1; return_set_msg(AUTO_DETECT, zone_num, data);
 			break;
-		case TARGE_DELAY:
+		case POWER_USE_STA:
+//			power_use_sta = data; 
+//			return_set_msg(POWER_USE_STA, zone_num, data);
 			break;
 		case 0x20:
 			get_init_value(data_package);
 		break;
-		case 0x30:return_sta_msg(); break;
+		case 0x30: power_use_sta = data_package[4]; return_sta_msg(); break;
 		default: break;
 	}
 }
@@ -57,7 +59,6 @@ void return_set_msg(uint8_t cmd, uint8_t zone_num, uint8_t sta)
 	HAL_UART_Transmit(&huart1, uart1_tx_data, 8, 1000);
 }
 
-
 void get_init_value(uint8_t *data_package)
 {
 	zone_type = data_package[4];
@@ -67,6 +68,12 @@ void get_init_value(uint8_t *data_package)
 	zone2_sensitivity = data_package[8];
 	zone1_mode = data_package[9];
 	zone2_mode = data_package[10];
+	power_use_sta = pre_power_use_sta = data_package[11];
+	
+	if(power_use_sta == USE_BATTERY_POWER)
+	{
+		configure_boost_pwm_duty_cycle(28);
+	}
 }
 
 void return_sta_msg(void)
