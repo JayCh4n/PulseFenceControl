@@ -72,10 +72,12 @@ Section Cross References
     main.o(i.main) refers to main.o(i.MX_NVIC_Init) for MX_NVIC_Init
     main.o(i.main) refers to stm32f1xx_hal.o(i.HAL_Delay) for HAL_Delay
     main.o(i.main) refers to flash.o(i.read_data_from_flash) for read_data_from_flash
+    main.o(i.main) refers to stm32f1xx_hal_uart.o(i.HAL_UART_Receive_IT) for HAL_UART_Receive_IT
     main.o(i.main) refers to stm32f1xx_hal_tim.o(i.HAL_TIM_Base_Start_IT) for HAL_TIM_Base_Start_IT
     main.o(i.main) refers to boost.o(i.boost_release) for boost_release
     main.o(i.main) refers to boost.o(i.auto_dectect) for auto_dectect
     main.o(i.main) refers to flash.o(i.write_flash_process) for write_flash_process
+    main.o(i.main) refers to uart.o(.data) for uart1_rx_buff
     main.o(i.main) refers to main.o(.bss) for huart1
     stm32f1xx_it.o(i.EXTI15_10_IRQHandler) refers to stm32f1xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler) for HAL_GPIO_EXTI_IRQHandler
     stm32f1xx_it.o(i.EXTI9_5_IRQHandler) refers to stm32f1xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler) for HAL_GPIO_EXTI_IRQHandler
@@ -1229,31 +1231,31 @@ Image Symbol Table
     i.__scatterload_zeroinit                 0x08003550   Section       14  handlers.o(i.__scatterload_zeroinit)
     i.arming_disarm                          0x08003560   Section        0  boost.o(i.arming_disarm)
     i.auto_dectect                           0x08003694   Section        0  boost.o(i.auto_dectect)
-    i.boost_release                          0x08003860   Section        0  boost.o(i.boost_release)
-    i.broken_detect                          0x080038b8   Section        0  boost.o(i.broken_detect)
-    i.configure_boost_pwm_duty_cycle         0x08003a7c   Section        0  boost.o(i.configure_boost_pwm_duty_cycle)
-    i.filter                                 0x08003ac0   Section        0  boost.o(i.filter)
-    i.get_extreme_value                      0x08003b22   Section        0  boost.o(i.get_extreme_value)
-    i.get_init_value                         0x08003b48   Section        0  uart.o(i.get_init_value)
-    i.get_max_voltage                        0x08003bb4   Section        0  boost.o(i.get_max_voltage)
-    i.get_return_voltage                     0x08003be8   Section        0  boost.o(i.get_return_voltage)
-    i.insert                                 0x08003c78   Section        0  boost.o(i.insert)
-    i.main                                   0x08003c98   Section        0  main.o(i.main)
-    i.primary_boost                          0x08003d04   Section        0  boost.o(i.primary_boost)
-    i.ralease_pulse                          0x08003dd8   Section        0  boost.o(i.ralease_pulse)
-    i.read_data_from_flash                   0x08003e5c   Section        0  flash.o(i.read_data_from_flash)
-    i.return_set_msg                         0x08003ef4   Section        0  uart.o(i.return_set_msg)
-    i.return_sta_msg                         0x08003f30   Section        0  uart.o(i.return_sta_msg)
-    i.set_protection_level                   0x08003f74   Section        0  boost.o(i.set_protection_level)
-    i.set_sensitivity                        0x08003fbc   Section        0  boost.o(i.set_sensitivity)
-    i.set_zone_mode                          0x08004000   Section        0  boost.o(i.set_zone_mode)
-    i.sort_float                             0x08004044   Section        0  boost.o(i.sort_float)
-    i.start_primary_boost                    0x08004088   Section        0  boost.o(i.start_primary_boost)
-    i.stop_primary_boost                     0x080040a8   Section        0  boost.o(i.stop_primary_boost)
-    i.touch_net_dectec                       0x080040c8   Section        0  boost.o(i.touch_net_dectec)
-    i.uart1_deal                             0x08004520   Section        0  uart.o(i.uart1_deal)
-    i.write_flash_process                    0x080045f4   Section        0  flash.o(i.write_flash_process)
-    .constdata                               0x08004630   Section       24  system_stm32f1xx.o(.constdata)
+    i.boost_release                          0x08003848   Section        0  boost.o(i.boost_release)
+    i.broken_detect                          0x080038a0   Section        0  boost.o(i.broken_detect)
+    i.configure_boost_pwm_duty_cycle         0x08003a64   Section        0  boost.o(i.configure_boost_pwm_duty_cycle)
+    i.filter                                 0x08003aa8   Section        0  boost.o(i.filter)
+    i.get_extreme_value                      0x08003b0a   Section        0  boost.o(i.get_extreme_value)
+    i.get_init_value                         0x08003b30   Section        0  uart.o(i.get_init_value)
+    i.get_max_voltage                        0x08003b9c   Section        0  boost.o(i.get_max_voltage)
+    i.get_return_voltage                     0x08003bd0   Section        0  boost.o(i.get_return_voltage)
+    i.insert                                 0x08003c60   Section        0  boost.o(i.insert)
+    i.main                                   0x08003c80   Section        0  main.o(i.main)
+    i.primary_boost                          0x08003cd8   Section        0  boost.o(i.primary_boost)
+    i.ralease_pulse                          0x08003dac   Section        0  boost.o(i.ralease_pulse)
+    i.read_data_from_flash                   0x08003e30   Section        0  flash.o(i.read_data_from_flash)
+    i.return_set_msg                         0x08003ec8   Section        0  uart.o(i.return_set_msg)
+    i.return_sta_msg                         0x08003f04   Section        0  uart.o(i.return_sta_msg)
+    i.set_protection_level                   0x08003f48   Section        0  boost.o(i.set_protection_level)
+    i.set_sensitivity                        0x08003f90   Section        0  boost.o(i.set_sensitivity)
+    i.set_zone_mode                          0x08003fd4   Section        0  boost.o(i.set_zone_mode)
+    i.sort_float                             0x08004018   Section        0  boost.o(i.sort_float)
+    i.start_primary_boost                    0x0800405c   Section        0  boost.o(i.start_primary_boost)
+    i.stop_primary_boost                     0x0800407c   Section        0  boost.o(i.stop_primary_boost)
+    i.touch_net_dectec                       0x0800409c   Section        0  boost.o(i.touch_net_dectec)
+    i.uart1_deal                             0x080044f4   Section        0  uart.o(i.uart1_deal)
+    i.write_flash_process                    0x080045c8   Section        0  flash.o(i.write_flash_process)
+    .constdata                               0x08004604   Section       24  system_stm32f1xx.o(.constdata)
     .data                                    0x20000000   Section        2  flash.o(.data)
     cycle_cnt                                0x20000001   Data           1  flash.o(.data)
     .data                                    0x20000002   Section        2  main.o(.data)
@@ -1455,35 +1457,35 @@ Image Symbol Table
     __scatterload_null                       0x0800354f   Thumb Code     2  handlers.o(i.__scatterload_null)
     __scatterload_zeroinit                   0x08003551   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
     arming_disarm                            0x08003561   Thumb Code   226  boost.o(i.arming_disarm)
-    auto_dectect                             0x08003695   Thumb Code   412  boost.o(i.auto_dectect)
-    boost_release                            0x08003861   Thumb Code    68  boost.o(i.boost_release)
-    broken_detect                            0x080038b9   Thumb Code   404  boost.o(i.broken_detect)
-    configure_boost_pwm_duty_cycle           0x08003a7d   Thumb Code    46  boost.o(i.configure_boost_pwm_duty_cycle)
-    filter                                   0x08003ac1   Thumb Code    98  boost.o(i.filter)
-    get_extreme_value                        0x08003b23   Thumb Code    36  boost.o(i.get_extreme_value)
-    get_init_value                           0x08003b49   Thumb Code    70  uart.o(i.get_init_value)
-    get_max_voltage                          0x08003bb5   Thumb Code    50  boost.o(i.get_max_voltage)
-    get_return_voltage                       0x08003be9   Thumb Code   134  boost.o(i.get_return_voltage)
-    insert                                   0x08003c79   Thumb Code    32  boost.o(i.insert)
-    main                                     0x08003c99   Thumb Code    98  main.o(i.main)
-    primary_boost                            0x08003d05   Thumb Code   182  boost.o(i.primary_boost)
-    ralease_pulse                            0x08003dd9   Thumb Code   114  boost.o(i.ralease_pulse)
-    read_data_from_flash                     0x08003e5d   Thumb Code   112  flash.o(i.read_data_from_flash)
-    return_set_msg                           0x08003ef5   Thumb Code    50  uart.o(i.return_set_msg)
-    return_sta_msg                           0x08003f31   Thumb Code    52  uart.o(i.return_sta_msg)
-    set_protection_level                     0x08003f75   Thumb Code    60  boost.o(i.set_protection_level)
-    set_sensitivity                          0x08003fbd   Thumb Code    56  boost.o(i.set_sensitivity)
-    set_zone_mode                            0x08004001   Thumb Code    56  boost.o(i.set_zone_mode)
-    sort_float                               0x08004045   Thumb Code    68  boost.o(i.sort_float)
-    start_primary_boost                      0x08004089   Thumb Code    22  boost.o(i.start_primary_boost)
-    stop_primary_boost                       0x080040a9   Thumb Code    22  boost.o(i.stop_primary_boost)
-    touch_net_dectec                         0x080040c9   Thumb Code   948  boost.o(i.touch_net_dectec)
-    uart1_deal                               0x08004521   Thumb Code   198  uart.o(i.uart1_deal)
-    write_flash_process                      0x080045f5   Thumb Code    44  flash.o(i.write_flash_process)
-    AHBPrescTable                            0x08004630   Data          16  system_stm32f1xx.o(.constdata)
-    APBPrescTable                            0x08004640   Data           8  system_stm32f1xx.o(.constdata)
-    Region$$Table$$Base                      0x08004648   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08004668   Number         0  anon$$obj.o(Region$$Table)
+    auto_dectect                             0x08003695   Thumb Code   388  boost.o(i.auto_dectect)
+    boost_release                            0x08003849   Thumb Code    68  boost.o(i.boost_release)
+    broken_detect                            0x080038a1   Thumb Code   404  boost.o(i.broken_detect)
+    configure_boost_pwm_duty_cycle           0x08003a65   Thumb Code    46  boost.o(i.configure_boost_pwm_duty_cycle)
+    filter                                   0x08003aa9   Thumb Code    98  boost.o(i.filter)
+    get_extreme_value                        0x08003b0b   Thumb Code    36  boost.o(i.get_extreme_value)
+    get_init_value                           0x08003b31   Thumb Code    70  uart.o(i.get_init_value)
+    get_max_voltage                          0x08003b9d   Thumb Code    50  boost.o(i.get_max_voltage)
+    get_return_voltage                       0x08003bd1   Thumb Code   134  boost.o(i.get_return_voltage)
+    insert                                   0x08003c61   Thumb Code    32  boost.o(i.insert)
+    main                                     0x08003c81   Thumb Code    74  main.o(i.main)
+    primary_boost                            0x08003cd9   Thumb Code   182  boost.o(i.primary_boost)
+    ralease_pulse                            0x08003dad   Thumb Code   114  boost.o(i.ralease_pulse)
+    read_data_from_flash                     0x08003e31   Thumb Code   112  flash.o(i.read_data_from_flash)
+    return_set_msg                           0x08003ec9   Thumb Code    50  uart.o(i.return_set_msg)
+    return_sta_msg                           0x08003f05   Thumb Code    52  uart.o(i.return_sta_msg)
+    set_protection_level                     0x08003f49   Thumb Code    60  boost.o(i.set_protection_level)
+    set_sensitivity                          0x08003f91   Thumb Code    56  boost.o(i.set_sensitivity)
+    set_zone_mode                            0x08003fd5   Thumb Code    56  boost.o(i.set_zone_mode)
+    sort_float                               0x08004019   Thumb Code    68  boost.o(i.sort_float)
+    start_primary_boost                      0x0800405d   Thumb Code    22  boost.o(i.start_primary_boost)
+    stop_primary_boost                       0x0800407d   Thumb Code    22  boost.o(i.stop_primary_boost)
+    touch_net_dectec                         0x0800409d   Thumb Code   948  boost.o(i.touch_net_dectec)
+    uart1_deal                               0x080044f5   Thumb Code   198  uart.o(i.uart1_deal)
+    write_flash_process                      0x080045c9   Thumb Code    44  flash.o(i.write_flash_process)
+    AHBPrescTable                            0x08004604   Data          16  system_stm32f1xx.o(.constdata)
+    APBPrescTable                            0x08004614   Data           8  system_stm32f1xx.o(.constdata)
+    Region$$Table$$Base                      0x0800461c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0800463c   Number         0  anon$$obj.o(Region$$Table)
     write_flash_flag                         0x20000000   Data           1  flash.o(.data)
     flag                                     0x20000004   Data           1  boost.o(.data)
     zone1_arming_sta                         0x20000005   Data           1  boost.o(.data)
@@ -1564,9 +1566,9 @@ Memory Map of the image
 
   Image Entry point : 0x080000ed
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000046e0, Max: 0x00010000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000046b4, Max: 0x00010000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00004668, Max: 0x00010000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000463c, Max: 0x00010000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1727,49 +1729,49 @@ Memory Map of the image
     0x08003550   0x08003550   0x0000000e   Code   RO         3191    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x0800355e   0x0800355e   0x00000002   PAD
     0x08003560   0x08003560   0x00000134   Code   RO          469    i.arming_disarm     boost.o
-    0x08003694   0x08003694   0x000001cc   Code   RO          470    i.auto_dectect      boost.o
-    0x08003860   0x08003860   0x00000058   Code   RO          471    i.boost_release     boost.o
-    0x080038b8   0x080038b8   0x000001c4   Code   RO          472    i.broken_detect     boost.o
-    0x08003a7c   0x08003a7c   0x00000044   Code   RO          473    i.configure_boost_pwm_duty_cycle  boost.o
-    0x08003ac0   0x08003ac0   0x00000062   Code   RO          474    i.filter            boost.o
-    0x08003b22   0x08003b22   0x00000024   Code   RO          475    i.get_extreme_value  boost.o
-    0x08003b46   0x08003b46   0x00000002   PAD
-    0x08003b48   0x08003b48   0x0000006c   Code   RO          610    i.get_init_value    uart.o
-    0x08003bb4   0x08003bb4   0x00000032   Code   RO          476    i.get_max_voltage   boost.o
-    0x08003be6   0x08003be6   0x00000002   PAD
-    0x08003be8   0x08003be8   0x00000090   Code   RO          477    i.get_return_voltage  boost.o
-    0x08003c78   0x08003c78   0x00000020   Code   RO          478    i.insert            boost.o
-    0x08003c98   0x08003c98   0x0000006c   Code   RO          210    i.main              main.o
-    0x08003d04   0x08003d04   0x000000d4   Code   RO          479    i.primary_boost     boost.o
-    0x08003dd8   0x08003dd8   0x00000084   Code   RO          480    i.ralease_pulse     boost.o
-    0x08003e5c   0x08003e5c   0x00000098   Code   RO           14    i.read_data_from_flash  flash.o
-    0x08003ef4   0x08003ef4   0x0000003c   Code   RO          611    i.return_set_msg    uart.o
-    0x08003f30   0x08003f30   0x00000044   Code   RO          612    i.return_sta_msg    uart.o
-    0x08003f74   0x08003f74   0x00000048   Code   RO          481    i.set_protection_level  boost.o
-    0x08003fbc   0x08003fbc   0x00000044   Code   RO          482    i.set_sensitivity   boost.o
-    0x08004000   0x08004000   0x00000044   Code   RO          483    i.set_zone_mode     boost.o
-    0x08004044   0x08004044   0x00000044   Code   RO          484    i.sort_float        boost.o
-    0x08004088   0x08004088   0x00000020   Code   RO          485    i.start_primary_boost  boost.o
-    0x080040a8   0x080040a8   0x00000020   Code   RO          486    i.stop_primary_boost  boost.o
-    0x080040c8   0x080040c8   0x00000458   Code   RO          487    i.touch_net_dectec  boost.o
-    0x08004520   0x08004520   0x000000d4   Code   RO          613    i.uart1_deal        uart.o
-    0x080045f4   0x080045f4   0x0000003c   Code   RO           15    i.write_flash_process  flash.o
-    0x08004630   0x08004630   0x00000018   Data   RO         3105    .constdata          system_stm32f1xx.o
-    0x08004648   0x08004648   0x00000020   Data   RO         3187    Region$$Table       anon$$obj.o
+    0x08003694   0x08003694   0x000001b4   Code   RO          470    i.auto_dectect      boost.o
+    0x08003848   0x08003848   0x00000058   Code   RO          471    i.boost_release     boost.o
+    0x080038a0   0x080038a0   0x000001c4   Code   RO          472    i.broken_detect     boost.o
+    0x08003a64   0x08003a64   0x00000044   Code   RO          473    i.configure_boost_pwm_duty_cycle  boost.o
+    0x08003aa8   0x08003aa8   0x00000062   Code   RO          474    i.filter            boost.o
+    0x08003b0a   0x08003b0a   0x00000024   Code   RO          475    i.get_extreme_value  boost.o
+    0x08003b2e   0x08003b2e   0x00000002   PAD
+    0x08003b30   0x08003b30   0x0000006c   Code   RO          610    i.get_init_value    uart.o
+    0x08003b9c   0x08003b9c   0x00000032   Code   RO          476    i.get_max_voltage   boost.o
+    0x08003bce   0x08003bce   0x00000002   PAD
+    0x08003bd0   0x08003bd0   0x00000090   Code   RO          477    i.get_return_voltage  boost.o
+    0x08003c60   0x08003c60   0x00000020   Code   RO          478    i.insert            boost.o
+    0x08003c80   0x08003c80   0x00000058   Code   RO          210    i.main              main.o
+    0x08003cd8   0x08003cd8   0x000000d4   Code   RO          479    i.primary_boost     boost.o
+    0x08003dac   0x08003dac   0x00000084   Code   RO          480    i.ralease_pulse     boost.o
+    0x08003e30   0x08003e30   0x00000098   Code   RO           14    i.read_data_from_flash  flash.o
+    0x08003ec8   0x08003ec8   0x0000003c   Code   RO          611    i.return_set_msg    uart.o
+    0x08003f04   0x08003f04   0x00000044   Code   RO          612    i.return_sta_msg    uart.o
+    0x08003f48   0x08003f48   0x00000048   Code   RO          481    i.set_protection_level  boost.o
+    0x08003f90   0x08003f90   0x00000044   Code   RO          482    i.set_sensitivity   boost.o
+    0x08003fd4   0x08003fd4   0x00000044   Code   RO          483    i.set_zone_mode     boost.o
+    0x08004018   0x08004018   0x00000044   Code   RO          484    i.sort_float        boost.o
+    0x0800405c   0x0800405c   0x00000020   Code   RO          485    i.start_primary_boost  boost.o
+    0x0800407c   0x0800407c   0x00000020   Code   RO          486    i.stop_primary_boost  boost.o
+    0x0800409c   0x0800409c   0x00000458   Code   RO          487    i.touch_net_dectec  boost.o
+    0x080044f4   0x080044f4   0x000000d4   Code   RO          613    i.uart1_deal        uart.o
+    0x080045c8   0x080045c8   0x0000003c   Code   RO           15    i.write_flash_process  flash.o
+    0x08004604   0x08004604   0x00000018   Data   RO         3105    .constdata          system_stm32f1xx.o
+    0x0800461c   0x0800461c   0x00000020   Data   RO         3187    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08004668, Size: 0x00000a70, Max: 0x00005000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x0800463c, Size: 0x00000a70, Max: 0x00005000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x08004668   0x00000002   Data   RW           17    .data               flash.o
-    0x20000002   0x0800466a   0x00000002   Data   RW          212    .data               main.o
-    0x20000004   0x0800466c   0x00000060   Data   RW          489    .data               boost.o
-    0x20000064   0x080046cc   0x00000001   Data   RW          615    .data               uart.o
-    0x20000065   0x080046cd   0x00000003   PAD
-    0x20000068   0x080046d0   0x00000009   Data   RW         2200    .data               stm32f1xx_hal.o
-    0x20000071   0x080046d9   0x00000003   PAD
-    0x20000074   0x080046dc   0x00000004   Data   RW         3106    .data               system_stm32f1xx.o
+    0x20000000   0x0800463c   0x00000002   Data   RW           17    .data               flash.o
+    0x20000002   0x0800463e   0x00000002   Data   RW          212    .data               main.o
+    0x20000004   0x08004640   0x00000060   Data   RW          489    .data               boost.o
+    0x20000064   0x080046a0   0x00000001   Data   RW          615    .data               uart.o
+    0x20000065   0x080046a1   0x00000003   PAD
+    0x20000068   0x080046a4   0x00000009   Data   RW         2200    .data               stm32f1xx_hal.o
+    0x20000071   0x080046ad   0x00000003   PAD
+    0x20000074   0x080046b0   0x00000004   Data   RW         3106    .data               system_stm32f1xx.o
     0x20000078        -       0x00000424   Zero   RW           16    .bss                flash.o
     0x2000049c        -       0x000000f0   Zero   RW          211    .bss                main.o
     0x2000058c        -       0x00000080   Zero   RW          488    .bss                boost.o
@@ -1784,9 +1786,9 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      3532        498          0         96        128      18455   boost.o
+      3508        498          0         96        128      18415   boost.o
        788         98          0          2       1060     456302   flash.o
-      1500        226          0          2        240       7595   main.o
+      1480        230          0          2        240       7591   main.o
         36          8        236          0       1024        800   startup_stm32f103xb.o
        192         36          0          9          0       4113   stm32f1xx_hal.o
       1570         62          0          0          0       6640   stm32f1xx_hal_adc.o
@@ -1804,7 +1806,7 @@ Image component sizes
        448         78          0          1        100       3113   uart.o
 
     ----------------------------------------------------------------------
-     16352       1370        292        120       2552     579739   Object Totals
+     16308       1374        292        120       2552     579695   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         22          0          0          6          0          0   (incl. Padding)
 
@@ -1860,15 +1862,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     17732       1386        292        120       2552     573639   Grand Totals
-     17732       1386        292        120       2552     573639   ELF Image Totals
-     17732       1386        292        120          0          0   ROM Totals
+     17688       1390        292        120       2552     573595   Grand Totals
+     17688       1390        292        120       2552     573595   ELF Image Totals
+     17688       1390        292        120          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                18024 (  17.60kB)
+    Total RO  Size (Code + RO Data)                17980 (  17.56kB)
     Total RW  Size (RW Data + ZI Data)              2672 (   2.61kB)
-    Total ROM Size (Code + RO Data + RW Data)      18144 (  17.72kB)
+    Total ROM Size (Code + RO Data + RW Data)      18100 (  17.68kB)
 
 ==============================================================================
 

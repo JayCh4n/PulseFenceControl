@@ -868,16 +868,6 @@ void auto_dectect(void)
 		HAL_Delay(1200);
 	}
 	
-	for(i=0; i<50; i++)
-	{
-
-	}
-	
-	for(i=0; i<50; i++)
-	{
-
-	}
-	
 	get_extreme_value(&zone1_high_max_normal_voltage,&zone1_high_min_normal_voltage, zone1_high_normal_voltage, 50);
 	get_extreme_value(&zone1_low_max_normal_voltage,&zone1_low_min_normal_voltage, zone1_low_normal_voltage, 50);
 	get_extreme_value(&zone2_high_max_normal_voltage,&zone2_high_min_normal_voltage, zone2_high_normal_voltage, 50);

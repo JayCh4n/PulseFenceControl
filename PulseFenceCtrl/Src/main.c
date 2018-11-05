@@ -116,13 +116,9 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-	HAL_Delay(500);
-	
+	HAL_Delay(200);
 	read_data_from_flash();
-	
-	__HAL_UART_ENABLE_IT(&huart1, UART_IT_TC);
-	__HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
-	
+	HAL_UART_Receive_IT(&huart1, &uart1_rx_buff, 1);
 	HAL_TIM_Base_Start_IT(&htim1);
 	
   /* USER CODE END 2 */
